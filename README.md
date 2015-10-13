@@ -3,8 +3,6 @@ DISCOTANGO
 
 **DISCO**ntinuous **T**oolkit for **A**quisition of **N**eighboring **G**lobal **O**ptimizations. (Don't worry, the acronym doesn't mean anything.)
 
-We write code and we don't care who knows.
-
 # Interface and Style
 
 We're writing this to expose some cool algorithms to the general public who may wish to write programs in languages that aren't matlab. Hence, [GPL](GPL.md). We're using C because it's straightforward and interops with literally every language. The previous reasoning also explains why we prefer `void *` to any macro-based parameterized typing, or C++ templates.
@@ -17,9 +15,15 @@ int dsc_some_fun(double (*fitness_fun) (void *), other_args..., dsc_options);
 
 As you can see above, DISCOTANGO prefers the `dsc` prefix for all non-static symbols. `other_args` depends upon the specific function called. *Note that `other_args` is not variadic, the ellipses are just for description*. `dsc_options` is a struct containing common parameters to function calls, including an RNG, and constructor/destructors for any data.
 
+Each exported function should be defined in its own `.c` and `.h` file. Naming should be `lowercase-with-hyphens`.
+
 ## External Libraries
 
 Use as many as you want! Just put them in the [libs](libs/) directory and add them to the [Makefile](Makefile) (talk to Danny if you don't know how). Make sure the licenses aren't screwy.
+
+## Testing
+
+We need a unit test suite! We're not releasing any code without testing, and no algorithm is to be checked off below until tests are made and pass. There seem to be plenty of C unit test frameworks on the internet, but none of them seem any good. We'll need to figure this out when we start finishing off algorithms.
 
 # Hit List
 
@@ -43,7 +47,7 @@ Algorithms:
 
 - [ ] Boyer-Moore
 - [ ] Levenshtein fuzzy matching
-- [ ] A* (lol)
+- [ ] A*
 - [ ] Union-Find
 - [ ] ...
 
