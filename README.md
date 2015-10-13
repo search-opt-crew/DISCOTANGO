@@ -33,7 +33,7 @@ Algorithms:
 - [ ] simplex [link](http://www.zweigmedia.com/RealWorld/tutorialsf4/frames4_3.html)
 - [ ] linear programming
 - [ ] genetic programming [link](http://www.doc.ic.ac.uk/~nd/surprise_96/journal/vol1/hmw/article1.html)
-...
+- [ ] ...
 
 ## Search
 
@@ -45,7 +45,7 @@ Algorithms:
 - [ ] Levenshtein fuzzy matching
 - [ ] A* (lol)
 - [ ] Union-Find
-...
+- [ ] ...
 
 ## CSP
 
@@ -54,6 +54,7 @@ In [csp](csp/).
 Algorithms:
 
 - [ ] [solvers](http://www.cs.toronto.edu/~fbacchus/Papers/liu.pdf)
+- [ ] ...
 
 ## Hardware Operations
 
