@@ -15,7 +15,7 @@ int disco_some_fun(double (*fitness_fun) (void *),
                    disco_options);
 ```
 
-As you can see above, DISCOTANGO prefers the `disco` prefix for all non-static symbols. `other_args` depends upon the specific function called. *Note that `other_args` is not variadic, the ellipses are just for description*. `disco_options` is a struct containing common parameters to function calls, including an RNG, and constructor/destructors for any data. All exported functions should return `int`, which will be `0` on success, and some standardized error code on failure.
+As you can see above, we use `under_scores`, and prefer the `disco` prefix for all non-static symbols. `other_args` depends upon the specific function called. *Note that `other_args` is not variadic, the ellipses are just for description*. `disco_options` is a struct containing common parameters to function calls, including an RNG, and constructor/destructors for any data. All exported functions should return `int`, which will be `0` on success, and some standardized error code on failure.
 
 Each exported function should be defined in its own `.c` and `.h` file. Naming should be `lowercase-with-hyphens`.
 
