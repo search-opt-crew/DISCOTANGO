@@ -1,7 +1,7 @@
 DISCOTANGO
 ==========
 
-**DISCO**ntinuous **T**oolkit for **A**quisition of **N**eighboring **G**lobal **O**ptimizations.
+**DISCO**ntinuous **T**oolkit for **A**quisition of **N**eighboring **G**lobal **O**ptimizations. (Don't worry, the acronym doesn't mean anything.)
 
 We write code and we don't care who knows.
 
@@ -37,7 +37,7 @@ Algorithms:
 
 ## Search
 
-In [search](search/). Not
+In [search](search/).
 
 Algorithms:
 
@@ -45,7 +45,12 @@ Algorithms:
 - [ ] Levenshtein fuzzy matching
 - [ ] A* (lol)
 - [ ] Union-Find
+...
 
 ## CSP
 
 In [csp](csp/).
+
+Algorithms:
+
+- [ ]
