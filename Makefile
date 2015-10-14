@@ -19,7 +19,7 @@
 
 CC := gcc
 
-DEPS := $(wildcard opt/*.h) $(wildcard common/*.h)
+DEPS := $(shell find . -name "*.h")
 IN := $(wildcard opt/*.c)
 OUT := $(patsubst %.c,%.o,$(IN))
 
