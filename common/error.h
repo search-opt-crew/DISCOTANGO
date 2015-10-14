@@ -4,7 +4,6 @@
 #include <stdarg.h>
 
 const int DISCO_INVALID_ARG = -1;
-const int DISCO_DIV_0 = -2;
 
 /* The DISCO_PP_NARG macro returns the number of arguments that have been passed
  * to it. Ripped from stackoverflow. */
