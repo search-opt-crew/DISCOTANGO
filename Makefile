@@ -27,8 +27,15 @@ DYNAMIC := libdiscotango.so
 STATIC := libdiscotango.a
 BIN := $(DYNAMIC) $(STATIC)
 
-CC_OPTS := -std=c99
+CC_OPTS := -std=c99 -Wall -Wextra -Werror
 LINK_OPTS :=
+
+RELEASE ?= 0
+ifeq ($(RELEASE), 0)
+CC_OPTS += -DDEBUG -g -O0
+else
+CC_OPTS += -DRELEASE -O3
+endif
 
 all: $(BIN)
 
@@ -47,5 +54,5 @@ clean:
 distclean: clean
 
 test:
-	echo 'no test target defined!'
-	exit -1
+	@echo 'no test target defined!'
+	@exit -1
