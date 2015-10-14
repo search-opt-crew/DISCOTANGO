@@ -33,7 +33,7 @@ endif
 
 CC := gcc
 
-CODE_DIRS := opt common csp
+CODE_DIRS := opt common
 
 DEPS := $(wildcard $(addsuffix /*.h,$(CODE_DIRS)))
 IN := $(wildcard $(addsuffix /*.c,$(CODE_DIRS)))
