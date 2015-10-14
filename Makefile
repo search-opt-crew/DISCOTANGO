@@ -17,29 +17,53 @@
 
 .PHONY: all clean distclean test
 
-CC := gcc
-
-DEPS := $(shell find . -name "*.h")
-IN := $(wildcard opt/*.c)
-OUT := $(patsubst %.c,%.o,$(IN))
-
-DYNAMIC := libdiscotango.so
-STATIC := libdiscotango.a
-BIN := $(DYNAMIC) $(STATIC)
-
 CC_OPTS := -std=c99 -Wall -Wextra -Werror
 LINK_OPTS :=
 
+BUILD_BASE := build
+
 RELEASE ?= 0
-ifeq ($(RELEASE), 0)
+ifeq ($(RELEASE),0)
 CC_OPTS += -DDEBUG -g -O0
+BUILD_DIR := $(BUILD_BASE)/debug
 else
 CC_OPTS += -DRELEASE -O3
+BUILD_DIR := $(BUILD_BASE)/release
 endif
+
+CC := gcc
+
+CODE_DIRS := opt common csp
+
+DEPS := $(wildcard $(addsuffix /*.h,$(CODE_DIRS)))
+IN := $(wildcard $(addsuffix /*.c,$(CODE_DIRS)))
+OUT := $(addprefix $(BUILD_DIR)/,$(notdir $(IN:%.c=%.o)))
+
+# the $(OUT) transformation relies on every .c filename being unique within the
+# codebase. this allows us to output all the .o files into build/{debug,release}
+# in a single flat folder, and to use vpath
+define \n
+
+
+endef
+wsort = $(words $(sort $(notdir $1)))
+ifneq ($(call wsort,$(DEPS)),$(words $(DEPS)))
+$(error DEPS is non-unique, ensure all .h files are unique:${\n}$(DEPS))
+endif
+ifneq ($(call wsort,$(IN)),$(words $(IN)))
+$(error IN is non-unique, ensure all .c files are unique:${\n}$(IN))
+endif
+
+DYNAMIC := $(BUILD_DIR)/libdiscotango.so
+STATIC := $(BUILD_DIR)/libdiscotango.a
+BIN := $(STATIC) $(DYNAMIC)
 
 all: $(BIN)
 
-%.o: %.c $(DEPS)
+# search all code directories for build files
+vpath %.h $(CODE_DIRS)
+vpath %.c $(CODE_DIRS)
+$(BUILD_DIR)/%.o: %.c $(DEPS)
 	$(CC) -fPIC $(CC_OPTS) -o $@ -c $<
 
 $(DYNAMIC): $(OUT)
