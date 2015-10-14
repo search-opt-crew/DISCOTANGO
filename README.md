@@ -10,12 +10,12 @@ We're writing this to expose some cool algorithms to the general public who may 
 To that end, while we appreciate the thoroughness with which libraries like [gsl](https://www.gnu.org/software/gsl/) are able to fine-tune their output, accepting 11 parameters as in [gsl_siman_solve](https://www.gnu.org/software/gsl/manual/html_node/Trivial-example.html) is a bit much. Like most other C libraries, DISCOTANGO exposes functions and structs. The interface is typically:
 
 ```c
-int disco_some_fun(double (*fitness_fun) (void *),
+int disco_some_fun(double (*disco_fitness_fun) (void *),
                    other_args...,
                    disco_options);
 ```
 
-As you can see above, we use `under_scores`, and prefer the `disco` prefix for all non-static symbols. `other_args` depends upon the specific function called. *Note that `other_args` is not variadic, the ellipses are just for description*. `disco_options` is a struct containing common parameters to function calls, including an RNG, and constructor/destructors for any data. All exported functions should return `int`, which will be `0` on success, and some standardized error code on failure.
+As you can see above, we use `under_scores`, and prefer the `disco` prefix for all non-static symbols. `disco_fitness_fun` is a typedef found in [typedefs.h](common/typedefs.h). `other_args` depends upon the specific function called. *Note that `other_args` is not variadic, the ellipses are just for description*. `disco_options` is a struct containing common parameters to function calls, including an RNG, and constructor/destructors for any data. All exported functions should return `int`, which will be `0` on success, and some standardized error code on failure.
 
 Each exported function should be defined in its own `.c` and `.h` file. Naming should be `lowercase-with-hyphens`. The GPL notice should be on top of all files; add your name to the `Copyright (c) 2015 <names>` line on any file you modify.
 
