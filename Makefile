@@ -1,5 +1,5 @@
 # Makefile for DISCOTANGO library.
-# Copyright (c) 2015 Danny McClanahan
+# Copyright (c) 2015 Danny McClanahan, Richard Kerr
 
 # This program is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -27,7 +27,7 @@ DYNAMIC := libdiscotango.so
 STATIC := libdiscotango.a
 BIN := $(DYNAMIC) $(STATIC)
 
-CC_OPTS :=
+CC_OPTS := -std=c99
 LINK_OPTS :=
 
 all: $(BIN)
