@@ -14,7 +14,7 @@ LINK_OPTS :=
 
 all: $(BIN)
 
-%.o: %.c
+%.o: %.c $(DEPS)
 	$(CC) -fPIC $(CC_OPTS) -o $@ -c $<
 
 $(BIN): $(OUT)
