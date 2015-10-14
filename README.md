@@ -10,7 +10,7 @@ We're writing this to expose some cool algorithms to the general public who may 
 To that end, while we appreciate the thoroughness with which libraries like [gsl](https://www.gnu.org/software/gsl/) are able to fine-tune their output, accepting 11 parameters as in [gsl_siman_solve](https://www.gnu.org/software/gsl/manual/html_node/Trivial-example.html) is a bit much. Like most other C libraries, DISCOTANGO exposes functions and structs. The interface is typically:
 
 ```c
-int disco_some_fun(double (*disco_fitness_fun) (void *),
+int disco_some_fun(disco_fitness_fun,
                    other_args...,
                    disco_options);
 ```
