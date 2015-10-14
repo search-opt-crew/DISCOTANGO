@@ -15,7 +15,7 @@
 # this program; if not, write to the Free Software Foundation, Inc., 59 Temple
 # Place, Suite 330, Boston, MA 02111-1307 USA
 
-.PHONY: all clean distclean test
+.PHONY: all clean test
 
 CC_OPTS := -std=c99 -Wall -Wextra -Werror
 LINK_OPTS :=
@@ -74,9 +74,3 @@ $(STATIC): $(OUT)
 
 clean:
 	rm -f $(OUT) $(BIN)
-
-distclean: clean
-
-test:
-	@echo 'no test target defined!'
-	@exit -1
