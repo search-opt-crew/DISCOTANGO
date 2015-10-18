@@ -20,8 +20,9 @@
  */
 
 #include <stdarg.h>
+#include "types.h"
 
-const int DISCO_INVALID_ARG = -1;
+const disco_return_t DISCO_INVALID_ARG = -1;
 
 /* The DISCO_PP_NARG macro returns the number of arguments that have been passed
  * to it. Ripped from stackoverflow. */
@@ -60,5 +61,7 @@ int disco_check_args(int num, ...) {
       return DISCO_INVALID_ARG;                                      \
     }                                                                \
   } while (0)
+
+#define DISCO_GET_OPTS(disco_opts_arg) do {} while (0)
 
 #endif /* __DISCO_ERROR_H__ */

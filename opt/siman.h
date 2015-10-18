@@ -19,10 +19,9 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../common/typedefs.h"
+#include "../common/types.h"
 
-int disco_siman(disco_fitness_fun fit,
-                disco_input_data input,
-                disco_output_data output);
+disco_return_t
+    disco_siman(disco_fitness_fun, disco_input_t, disco_output_t, disco_opts_t);
 
 #endif /* __DISCO_SIMAN_H__ */
