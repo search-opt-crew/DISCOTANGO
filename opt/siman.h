@@ -24,8 +24,6 @@
 /* heavily drawn from the gsl_siman_solve routine in gnu gsl */
 
 typedef struct {
-  disco_fitness fit;
-  disco_mutate step;
   size_t tries_per_step;
   size_t iters_per_temp;
   double step_size;
@@ -37,6 +35,9 @@ disco_siman_options disco_siman_default_options();
 
 disco_return_t disco_siman(disco_state_const,
                            disco_state,
+                           disco_fitness,
+                           disco_metric,
+                           disco_step,
                            disco_siman_options,
                            disco_options);
 

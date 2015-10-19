@@ -1,5 +1,8 @@
+#ifndef __DISCO_CONSTANTS_H__
+#define __DISCO_CONSTANTS_H__
+
 /**
- * Type definitions for DISCOTANGO library.
+ * Numerical constants for the DISCOTANGO library.
  * Copyright (c) 2015 Danny McClanahan
  *
  * DISCOTANGO is free software: you can redistribute it and/or modify
@@ -16,18 +19,6 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include "types.h"
+const double DISCO_LOG_DBL_MIN = -7.0839641853226408e+02;
 
-disco_options disco_default_options(size_t len) {
-  disco_options opts = {.prints = printf,
-                        .printv = NULL,
-                        .alloc = malloc,
-                        .copy = memcpy,
-                        .destroy = free,
-                        .rng = disco_default_rng(),
-                        .len = len};
-  return opts;
-}
+#endif /* __DISCO_CONSTANTS_H__ */

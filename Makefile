@@ -19,7 +19,7 @@
 # required for mersenne twister (sfmt) compilation
 DEFINES := -DSFMT_MEXP=19937
 CC_OPTS := -std=c99 -Wall -Wextra -Werror $(DEFINES)
-LINK_OPTS :=
+LINK_OPTS := -lm
 
 BUILD_BASE := build
 

@@ -22,16 +22,18 @@
 #include <stddef.h>
 #include "../libs/SFMT-src-1.4.1/SFMT.h"
 
-typedef uint32_t disco_rng_return_t;
-
 typedef sfmt_t disco_rng_state;
 
-typedef disco_rng_return_t (*disco_get_random)(disco_rng_state *);
+typedef uint32_t (*disco_rng_get_uint32)(disco_rng_state *);
+typedef uint64_t (*disco_rng_get_uint64)(disco_rng_state *);
+typedef double (*disco_rng_get_double)(disco_rng_state *);
 
 /* assumes it will be run on itself, so disco_get_random functions assume the
  * pointer passed to them is valid and DO NOT CHECK FOR NULL. */
 typedef struct {
-  disco_get_random get;
+  disco_rng_get_uint32 get_32;
+  disco_rng_get_uint64 get_64;
+  disco_rng_get_double get_double;
   disco_rng_state state;
 } disco_rng;
 

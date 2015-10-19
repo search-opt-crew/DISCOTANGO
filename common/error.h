@@ -22,6 +22,7 @@
 #include "types.h"
 
 const disco_return_t DISCO_NULL_ARG;
+const disco_return_t DISCO_NO_ALLOC;
 const disco_return_t DISCO_NO_COPY;
 const disco_return_t DISCO_NO_DESTROY;
 const disco_return_t DISCO_NO_FUN;
@@ -42,6 +43,9 @@ bool disco_check_args(int, ...);
 
 #define DISCO_CHECK_OPTS(opts) \
   do {                         \
+    if (!opts.alloc) { \
+      return DISCO_NO_ALLOC;   \
+    }                          \
     if (!opts.copy) {          \
       return DISCO_NO_COPY;    \
     }                          \

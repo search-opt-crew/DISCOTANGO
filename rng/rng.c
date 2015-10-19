@@ -20,7 +20,9 @@
 #include "rng.h"
 
 disco_rng disco_default_rng() {
-  disco_rng rng = {.get = sfmt_genrand_uint32};
+  disco_rng rng = {.get_32 = sfmt_genrand_uint32,
+                   .get_64 = sfmt_genrand_uint64,
+                   .get_double = sfmt_genrand_real1};
   sfmt_init_gen_rand(&rng.state, (uint32_t) time(NULL));
   return rng;
 }

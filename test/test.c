@@ -16,21 +16,42 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "../opt/siman.h"
 
+double E1(disco_state_const xp) {
+  double x = *((double *) xp);
+  return exp(-pow((x - 1), 2)) * sin(8 * x);
+}
+
+disco_state S1(disco_state xp, disco_rng r, double step_size) {
+  double * x = (double *) xp;
+  *x = r.get_double(&r.state) * 2 * step_size - step_size + *x;
+  return (disco_state) x;
+}
+
+void P1(disco_state xp) {
+  printf("%12g", *((double *) xp));
+}
+
+double M1(disco_state xp, disco_state yp) {
+  return fabs(*((double *) xp) - *((double *) yp));
+}
+
 int main() {
   disco_siman_options sopts = disco_siman_default_options();
-  disco_state test_in = malloc(1), test_out = malloc(1);
-  disco_options opts = disco_default_options();
-  disco_return_t ret = disco_siman(test_in, test_out, sopts, opts);
-  printf("%u\n", opts.rng.get(&opts.rng.state));
-  free(test_in);
-  free(test_out);
+  disco_state test_in = malloc(sizeof(double)),
+              test_out = malloc(sizeof(double));
+  *((double *) test_in) = 0;
+  disco_options opts = disco_default_options(sizeof(double));
+  disco_return_t ret = disco_siman(test_in, test_out, E1, M1, S1, sopts, opts);
   if (ret) {
     printf("%s\n", disco_errstr(ret));
   } else {
-    printf("%s\n", "no errors!");
+    printf("%f\n", *((double *) test_out));
   }
+  free(test_in);
+  free(test_out);
 }
