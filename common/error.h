@@ -22,10 +22,8 @@
 #include "types.h"
 
 const disco_return_t DISCO_NULL_ARG;
-const disco_return_t DISCO_NO_OPTS;
 const disco_return_t DISCO_NO_COPY;
 const disco_return_t DISCO_NO_DESTROY;
-const disco_return_t DISCO_NO_RNG;
 
 const char * disco_errstr(disco_return_t);
 
@@ -39,22 +37,14 @@ bool disco_check_args(int, ...);
     }                                                                \
   } while (0)
 
-#define DISCO_CHECK_OPTS(opts)                                  \
-  do {                                                          \
-    if (!opts) {                                                \
-      return DISCO_NO_OPTS;                                     \
-    } else {                                                    \
-      if (!opts->copy) {                                        \
-        return DISCO_NO_COPY;                                   \
-      }                                                         \
-      if (!opts->destroy) {                                     \
-        return DISCO_NO_DESTROY;                                \
-      }                                                         \
-      if (!opts->rng || !opts->rng->get || !opts->rng->state || \
-          !opts->rng->state->buf) {                             \
-        return DISCO_NO_RNG;                                    \
-      }                                                         \
-    }                                                           \
+#define DISCO_CHECK_OPTS(opts) \
+  do {                         \
+    if (!opts.copy) {         \
+      return DISCO_NO_COPY;    \
+    }                          \
+    if (!opts.destroy) {      \
+      return DISCO_NO_DESTROY; \
+    }                          \
   } while (0)
 
 #endif /* __DISCO_ERROR_H__ */

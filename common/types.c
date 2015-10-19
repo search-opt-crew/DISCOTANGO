@@ -20,18 +20,10 @@
 #include <stdlib.h>
 #include "types.h"
 
-disco_options disco_make_opts() {
-  disco_options opts = malloc(sizeof(struct disco_options_struct));
-  opts->printf = NULL;
-  opts->copy = memcpy;
-  opts->destroy = free;
-  opts->rng = disco_make_rng();
+disco_options disco_default_options() {
+  disco_options opts = {.printf = NULL,
+                        .copy = memcpy,
+                        .destroy = free,
+                        .rng = disco_default_rng()};
   return opts;
-}
-
-void disco_free_opts(disco_options opts) {
-  if (opts) {
-    disco_free_rng(opts->rng);
-    free(opts);
-  }
 }

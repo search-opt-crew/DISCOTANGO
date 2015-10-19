@@ -41,16 +41,13 @@ typedef void (*disco_print)(void *);
 typedef void * (*disco_copy)(void *, const void *, size_t);
 typedef void (*disco_destroy)(void *);
 
-struct disco_options_struct {
+typedef struct {
   disco_print printf;
   disco_copy copy;
   disco_destroy destroy;
   disco_rng rng;
-};
+} disco_options;
 
-typedef struct disco_options_struct * disco_options;
-
-disco_options disco_make_opts();
-void disco_free_opts(disco_options);
+disco_options disco_default_options();
 
 #endif /* __DISCO_TYPEDEFS_H__ */

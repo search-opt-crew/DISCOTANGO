@@ -22,10 +22,8 @@
 #define DISCO_ERRSTR(codename, errstr) ("DISCOTANGO: " #codename ": " errstr)
 
 const disco_return_t DISCO_NULL_ARG = -1;
-const disco_return_t DISCO_NO_OPTS = -2;
-const disco_return_t DISCO_NO_COPY = -3;
-const disco_return_t DISCO_NO_DESTROY = -4;
-const disco_return_t DISCO_NO_RNG = -5;
+const disco_return_t DISCO_NO_COPY = -2;
+const disco_return_t DISCO_NO_DESTROY = -3;
 
 /* wish there was a more reliable way to report error values that didn't require
  * giving the same error code twice, but C macros don't really give us much
@@ -37,13 +35,9 @@ const char * disco_errstr(disco_return_t err) {
   case -1:
     return DISCO_ERRSTR(DISCO_NULL_ARG, "null argument");
   case -2:
-    return DISCO_ERRSTR(DISCO_NO_OPTS, "no options object");
-  case -3:
     return DISCO_ERRSTR(DISCO_NO_COPY, "no copy operation");
-  case -4:
+  case -3:
     return DISCO_ERRSTR(DISCO_NO_DESTROY, "no destroy operation");
-  case -5:
-    return DISCO_ERRSTR(DISCO_NO_RNG, "no rng struct");
   default:
     return disco_unrecognized_error;
   }
