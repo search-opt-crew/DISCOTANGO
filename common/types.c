@@ -16,14 +16,22 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <string.h>
+#include <stdlib.h>
 #include "types.h"
 
-const disco_opts_t DISCO_DEFAULT_OPTS = {
-    .printf = NULL, .copy = NULL, .destroy = NULL};
-
-disco_opts_t disco_default_opts() {
-  disco_opts_t opts = {.printf = DISCO_DEFAULT_OPTS.printf,
-                       .copy = DISCO_DEFAULT_OPTS.copy,
-                       .destroy = DISCO_DEFAULT_OPTS.destroy};
+disco_options disco_make_opts() {
+  disco_options opts = malloc(sizeof(struct disco_options_struct));
+  opts->printf = NULL;
+  opts->copy = memcpy;
+  opts->destroy = free;
+  opts->rng = disco_make_rng();
   return opts;
+}
+
+void disco_free_opts(disco_options opts) {
+  if (opts) {
+    disco_free_rng(opts->rng);
+    free(opts);
+  }
 }

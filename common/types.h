@@ -22,41 +22,35 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include "macros.h"
+#include "../rng/rng.h"
 
 /* arguments which can be used by all functions in the library. if you must
  * make a new type of argument, add it here, then add it to your function. */
-typedef int disco_return;
+typedef int disco_return_t;
 typedef double (*disco_fitness)(void *);
 typedef int (*disco_fitness_discrete)(void *);
 typedef size_t (*disco_fitness_nonnegative)(void *);
 typedef void * disco_state;
-typedef int (*disco_rng)();
 typedef void * (*disco_mutate)(void *);
 
 /* common options for all functions. all of these have sane defaults, specified
  * at bottom. */
 typedef void (*disco_print)(void *);
-/* copy from argument 1 to argument 2 (which /does/ point to already allocated
+/* copy from argument 2 to argument 1 (which /does/ point to already allocated
  * memory). return the newly constructed value. */
-typedef void * (*disco_copy)(void *, void *);
+typedef void * (*disco_copy)(void *, const void *, size_t);
 typedef void (*disco_destroy)(void *);
-/* TODO: make rng type (steal from somewhere) */
 
-typedef struct disco_options {
+struct disco_options_struct {
   disco_print printf;
   disco_copy copy;
   disco_destroy destroy;
+  disco_rng rng;
 };
 
-const disco_options DISCO_DEFAULT_OPTS;
-disco_options disco_default_opts();
-#define DISCO_CHECK_OPTS(opts) \
-  do {                         \
-    if (!opts.copy) {          \
-      return DISCO_MISSING_OP; \
-    }                          \
-    if (!opts.destroy) {       \
-      return DISCO_MISSING_OP; \
-    }                          \
-  } while (0)
+typedef struct disco_options_struct * disco_options;
+
+disco_options disco_make_opts();
+void disco_free_opts(disco_options);
+
 #endif /* __DISCO_TYPEDEFS_H__ */

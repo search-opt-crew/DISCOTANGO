@@ -19,11 +19,20 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../common/types.h"
+#include "../common/error.h"
 
-struct disco_siman_options {
-  disco_mutate_fun step;
-};
-disco_return_t disco_siman(disco_state_t, disco_fitness_fun, disco_opts_t);
+/* heavily drawn from the gsl_siman_solve routine in gnu gsl */
+
+typedef struct {
+  disco_fitness fit;
+  disco_mutate step;
+  size_t tries_per_step;
+  size_t iters_per_temp;
+  double step_size;
+  /* boltzmann constants */
+  double k, t_init, mu_t, t_min;
+} disco_siman_options;
+
+disco_return_t disco_siman(disco_state, disco_siman_options, disco_options);
 
 #endif /* __DISCO_SIMAN_H__ */

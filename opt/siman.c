@@ -16,12 +16,13 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../common/error.h"
 #include "siman.h"
 
-disco_return_t
-    disco_siman(disco_state_t input, disco_fitness_fun fit, disco_opts_t opts) {
-  DISCO_CHECK_ARGS(fit, input, output);
+disco_return_t disco_siman(disco_state input,
+                           disco_siman_options siman_opts
+                           __attribute__((__unused__)),
+                           disco_options opts) {
+  DISCO_CHECK_ARGS(input);
   DISCO_CHECK_OPTS(opts);
   return 0;
 }

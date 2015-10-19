@@ -32,7 +32,7 @@ endif
 
 CC := gcc
 
-CODE_DIRS := opt common
+CODE_DIRS := opt common rng test
 
 DEPS := $(wildcard $(addsuffix /*.h,$(CODE_DIRS)))
 IN := $(wildcard $(addsuffix /*.c,$(CODE_DIRS)))
@@ -55,7 +55,8 @@ endif
 
 DYNAMIC := $(BUILD_DIR)/libdiscotango.so
 STATIC := $(BUILD_DIR)/libdiscotango.a
-BIN := $(STATIC) $(DYNAMIC)
+TEST_BIN := $(BUILD_DIR)/test
+BIN := $(STATIC) $(DYNAMIC) $(TEST_BIN)
 
 all: $(BIN)
 
@@ -70,6 +71,9 @@ $(DYNAMIC): $(OUT)
 
 $(STATIC): $(OUT)
 	ar rcs $@ $^
+
+$(TEST_BIN): $(OUT) $(STATIC)
+	$(CC) $(LINK_OPTS) -o $@ $(BUILD_DIR)/test.o $(STATIC)
 
 clean:
 	rm -f $(OUT) $(BIN)
