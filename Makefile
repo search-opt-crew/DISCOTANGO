@@ -68,7 +68,6 @@ endif
 
 DYNAMIC := $(BUILD_DIR)/libdiscotango.so
 STATIC := $(BUILD_DIR)/libdiscotango.a
-TEST_BIN := $(BUILD_DIR)/test
 BIN := $(STATIC) $(DYNAMIC)
 
 all: $(BIN)
@@ -85,12 +84,13 @@ $(DYNAMIC): $(OUT)
 $(STATIC): $(OUT)
 	ar rcs $@ $^
 
+TEST_BIN := $(BUILD_DIR)/test
 $(TEST_BIN): $(OUT) $(STATIC) $(TEST_IN) $(TEST_DEPS)
 	$(CC) $(addprefix -I,$(UNITY_DIRS)) $(CC_OPTS) $(LINK_OPTS) -o $@ \
 		$(TEST_IN) $(STATIC)
 
-clean:
-	rm -f $(OUT) $(BIN)
-
 test: all $(TEST_BIN)
 	exec $(TEST_BIN)
+
+clean:
+	rm -f $(OUT) $(BIN) $(TEST_BIN)
