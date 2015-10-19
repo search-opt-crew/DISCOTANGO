@@ -80,3 +80,6 @@ $(STATIC): $(OUT)
 
 clean:
 	rm -f $(OUT) $(BIN)
+
+test:
+	exec $(TEST_BIN)
