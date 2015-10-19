@@ -16,6 +16,7 @@
 
 .PHONY: all clean test
 
+# required for mersenne twister (sfmt) compilation
 DEFINES := -DSFMT_MEXP=19937
 CC_OPTS := -std=c99 -Wall -Wextra -Werror $(DEFINES)
 LINK_OPTS :=
