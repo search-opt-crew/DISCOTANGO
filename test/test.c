@@ -16,45 +16,12 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <math.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include "../opt/siman.h"
+#include "../libs/Unity-master/extras/fixture/src/unity_fixture.h"
 
-/* drawn from
- * https://www.gnu.org/software/gsl/manual/html_node/Trivial-example.html */
-
-double E1(disco_state_const xp) {
-  double x = *((double *) xp);
-  return exp(-pow((x - 1), 2)) * sin(8 * x);
+static void RunAllTests() {
+  RUN_TEST_GROUP(siman);
 }
 
-disco_state S1(disco_state xp, disco_rng r, double step_size) {
-  double * x = (double *) xp;
-  *x = r.get_double(&r.state) * 2 * step_size - step_size + *x;
-  return (disco_state) x;
-}
-
-void P1(disco_state xp) {
-  printf("%12g", *((double *) xp));
-}
-
-double M1(disco_state xp, disco_state yp) {
-  return fabs(*((double *) xp) - *((double *) yp));
-}
-
-int main() {
-  disco_siman_options sopts = disco_siman_default_options();
-  disco_state test_in = malloc(sizeof(double)),
-              test_out = malloc(sizeof(double));
-  *((double *) test_in) = 0;
-  disco_options opts = disco_default_options(sizeof(double));
-  disco_return_t ret = disco_siman(test_in, test_out, E1, M1, S1, sopts, opts);
-  if (ret) {
-    printf("%s\n", disco_errstr(ret));
-  } else {
-    printf("%f\n", *((double *) test_out));
-  }
-  free(test_in);
-  free(test_out);
+int main(int argc, const char ** argv) {
+  return UnityMain(argc, argv, RunAllTests);
 }

@@ -36,8 +36,10 @@ CC := gcc
 
 LIB_DIR := libs
 MERSENNE_DIR := $(LIB_DIR)/SFMT-src-1.4.1
-MERSENNE_DEPS := $(wildcard $(MERSENNE_DIR)/*.h)
-MERSENNE_IN := $(wildcard $(MERSENNE_DIR)/*.c)
+UNITY_DIRS := $(LIB_DIR)/Unity-master/src \
+	$(LIB_DIR)/Unity-master/extras/fixture/src
+UNITY_DEPS := $(wildcard $(addsuffix /*.h, $(UNITY_DIRS)))
+UNITY_IN := $(wildcard $(addsuffix /*.c, $(UNITY_DIRS)))
 
 CODE_DIRS := opt common rng $(MERSENNE_DIR)
 TEST_DIR := test
@@ -46,7 +48,8 @@ DEPS := $(wildcard $(addsuffix /*.h,$(CODE_DIRS)))
 IN := $(wildcard $(addsuffix /*.c,$(CODE_DIRS)))
 OUT := $(addprefix $(BUILD_DIR)/,$(notdir $(IN:%.c=%.o)))
 
-TEST_IN := $(wildcard $(TEST_DIR)/*.c)
+TEST_DEPS := $(wildcard $(TEST_DIR)/*.h) $(UNITY_DEPS)
+TEST_IN := $(wildcard $(TEST_DIR)/*.c) $(UNITY_IN)
 
 # the $(OUT) transformation relies on every .c filename being unique within the
 # codebase. this allows us to output all the .o files into build/{debug,release}
@@ -66,12 +69,9 @@ endif
 DYNAMIC := $(BUILD_DIR)/libdiscotango.so
 STATIC := $(BUILD_DIR)/libdiscotango.a
 TEST_BIN := $(BUILD_DIR)/test
-BIN := $(STATIC) $(DYNAMIC) $(TEST_BIN)
+BIN := $(STATIC) $(DYNAMIC)
 
 all: $(BIN)
-
-$(TEST_BIN): $(OUT) $(STATIC) $(TEST_IN)
-	$(CC) $(CC_OPTS) $(LINK_OPTS) -o $@ $(TEST_IN) $(STATIC)
 
 # search all code directories for build files
 vpath %.h $(CODE_DIRS)
@@ -85,8 +85,12 @@ $(DYNAMIC): $(OUT)
 $(STATIC): $(OUT)
 	ar rcs $@ $^
 
+$(TEST_BIN): $(OUT) $(STATIC) $(TEST_IN) $(TEST_DEPS)
+	$(CC) $(addprefix -I,$(UNITY_DIRS)) $(CC_OPTS) $(LINK_OPTS) -o $@ \
+		$(TEST_IN) $(STATIC)
+
 clean:
 	rm -f $(OUT) $(BIN)
 
-test: all
+test: all $(TEST_BIN)
 	exec $(TEST_BIN)
