@@ -43,7 +43,7 @@ typedef disco_state (*disco_copy)(disco_state, disco_state_const, size_t);
 typedef void (*disco_destroy)(disco_state);
 
 typedef struct {
-  disco_print printf;
+  disco_print print;
   disco_copy copy;
   disco_destroy destroy;
   disco_rng rng;

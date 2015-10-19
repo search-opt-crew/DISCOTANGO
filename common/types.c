@@ -21,7 +21,7 @@
 #include "types.h"
 
 disco_options disco_default_options() {
-  disco_options opts = {.printf = NULL,
+  disco_options opts = {.print = NULL,
                         .copy = memcpy,
                         .destroy = free,
                         .rng = disco_default_rng(),
