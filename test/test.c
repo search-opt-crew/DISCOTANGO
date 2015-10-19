@@ -21,7 +21,7 @@
 #include "../opt/siman.h"
 
 int main() {
-  disco_siman_options sopts;
+  disco_siman_options sopts = disco_siman_default_options();
   disco_state test_in = malloc(1);
   disco_state test_out = malloc(1);
   disco_options opts = disco_default_options();

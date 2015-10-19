@@ -18,12 +18,26 @@
 
 #include "siman.h"
 
+/* TODO: implement these */
+disco_siman_options disco_siman_default_options() {
+  disco_siman_options opts = {.fit = NULL,
+                              .step = NULL,
+                              .tries_per_step = 1,
+                              .iters_per_temp = 1,
+                              .step_size = 1,
+                              .k = 1,
+                              .t_init = 1,
+                              .mu_t = 1,
+                              .t_min = 1};
+  return opts;
+}
+
 disco_return_t disco_siman(disco_state_const input,
                            disco_state output,
                            disco_siman_options siman_opts
                            __attribute__((__unused__)),
                            disco_options opts) {
-  DISCO_CHECK_ARGS(input);
+  DISCO_CHECK_ARGS(input, output);
   DISCO_CHECK_OPTS(opts);
   /* copies input to output; technically not wrong! */
   opts.copy(output, input, opts.len);

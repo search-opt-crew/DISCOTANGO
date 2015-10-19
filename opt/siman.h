@@ -33,6 +33,8 @@ typedef struct {
   double k, t_init, mu_t, t_min;
 } disco_siman_options;
 
+disco_siman_options disco_siman_default_options();
+
 disco_return_t disco_siman(disco_state_const,
                            disco_state,
                            disco_siman_options,
