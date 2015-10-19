@@ -16,18 +16,18 @@ void disco_free_rng_state(disco_rng_state st) {
 }
 
 /* TODO: add real random function */
-static bool disco_rng_state_is_valid(disco_rng_state st) {
+bool disco_rng_state_is_valid(disco_rng_state st) {
   return st && st->buf;
 }
-static disco_rng_return_t disco_default_get_rng(disco_rng_state st) {
+disco_rng_return_t disco_default_get_rng(disco_rng_state st) {
   if (!disco_rng_state_is_valid(st)) {
     return -1;
   }
-  if ((bool) st->buf) {
-    st->buf = (void *) false;
+  if (*((bool *) st->buf)) {
+    *((bool *) st->buf) = false;
     return 1;
   } else {
-    st->buf = (void *) true;
+    *((bool *) st->buf) = true;
     return 0;
   }
 }
@@ -36,6 +36,7 @@ disco_rng disco_make_rng() {
   disco_rng rng = malloc(sizeof(struct disco_rng_struct));
   rng->get = disco_default_get_rng;
   rng->state = disco_make_rng_state(sizeof(bool));
+  *((bool *) rng->state->buf) = false;
   return rng;
 }
 

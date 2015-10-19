@@ -7,6 +7,7 @@ int main() {
   disco_state test_inp = malloc(1);
   disco_options opts = disco_make_opts();
   disco_return_t ret = disco_siman(test_inp, sopts, opts);
+  printf("%d\n", opts->rng->get(opts->rng->state));
   free(test_inp);
   disco_free_opts(opts);
   if (ret) {
