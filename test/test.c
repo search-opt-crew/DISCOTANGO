@@ -22,8 +22,7 @@
 
 int main() {
   disco_siman_options sopts = disco_siman_default_options();
-  disco_state test_in = malloc(1);
-  disco_state test_out = malloc(1);
+  disco_state test_in = malloc(1), test_out = malloc(1);
   disco_options opts = disco_default_options();
   disco_return_t ret = disco_siman(test_in, test_out, sopts, opts);
   printf("%zu\n", opts.rng.get(opts.rng.state));

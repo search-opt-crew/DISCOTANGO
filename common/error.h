@@ -24,25 +24,28 @@
 const disco_return_t DISCO_NULL_ARG;
 const disco_return_t DISCO_NO_COPY;
 const disco_return_t DISCO_NO_DESTROY;
+const disco_return_t DISCO_NO_FUN;
 
 const char * disco_errstr(disco_return_t);
 
 bool disco_check_args(int, ...);
 
 /* Fails if no arguments are given. */
-#define DISCO_CHECK_ARGS(...)                                        \
+#define DISCO_CHECK_MACRO(err, ...)                                  \
   do {                                                               \
     if (disco_check_args(DISCO_PP_NARG(__VA_ARGS__), __VA_ARGS__)) { \
-      return DISCO_NULL_ARG;                                         \
+      return err;                                                    \
     }                                                                \
   } while (0)
+#define DISCO_CHECK_ARGS(...) DISCO_CHECK_MACRO(DISCO_NULL_ARG, __VA_ARGS__)
+#define DISCO_CHECK_FUNS(...) DISCO_CHECK_MACRO(DISCO_NO_FUN, __VA_ARGS__)
 
 #define DISCO_CHECK_OPTS(opts) \
   do {                         \
-    if (!opts.copy) {         \
+    if (!opts.copy) {          \
       return DISCO_NO_COPY;    \
     }                          \
-    if (!opts.destroy) {      \
+    if (!opts.destroy) {       \
       return DISCO_NO_DESTROY; \
     }                          \
   } while (0)

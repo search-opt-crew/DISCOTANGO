@@ -39,6 +39,7 @@ disco_return_t disco_siman(disco_state_const input,
                            disco_options opts) {
   DISCO_CHECK_ARGS(input, output);
   DISCO_CHECK_OPTS(opts);
+  DISCO_CHECK_FUNS(siman_opts.fit, siman_opts.step);
   /* copies input to output; technically not wrong! */
   opts.copy(output, input, opts.len);
   return 0;
