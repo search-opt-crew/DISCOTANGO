@@ -1,8 +1,5 @@
-#ifndef __DISCO_SIMAN_H__
-#define __DISCO_SIMAN_H__
-
 /**
- * Simulated Annealing for DISCOTANGO library.
+ * Type definitions for DISCOTANGO library.
  * Copyright (c) 2015 Danny McClanahan
  *
  * DISCOTANGO is free software: you can redistribute it and/or modify
@@ -19,11 +16,14 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../common/types.h"
+#include "types.h"
 
-struct disco_siman_options {
-  disco_mutate_fun step;
-};
-disco_return_t disco_siman(disco_state_t, disco_fitness_fun, disco_opts_t);
+const disco_opts_t DISCO_DEFAULT_OPTS = {
+    .printf = NULL, .copy = NULL, .destroy = NULL};
 
-#endif /* __DISCO_SIMAN_H__ */
+disco_opts_t disco_default_opts() {
+  disco_opts_t opts = {.printf = DISCO_DEFAULT_OPTS.printf,
+                       .copy = DISCO_DEFAULT_OPTS.copy,
+                       .destroy = DISCO_DEFAULT_OPTS.destroy};
+  return opts;
+}

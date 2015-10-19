@@ -19,36 +19,44 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdbool.h>
 #include <stddef.h>
+#include "macros.h"
 
 /* arguments which can be used by all functions in the library. if you must
  * make a new type of argument, add it here, then add it to your function. */
-typedef int disco_return_t;
-typedef double (*disco_fitness_fun)(void *);
-typedef int (*disco_fitness_fun_discrete)(void *);
-typedef size_t (*disco_fitness_fun_nonnegative)(void *);
-typedef void * disco_input_t;
-typedef void * disco_output_t;
+typedef int disco_return;
+typedef double (*disco_fitness)(void *);
+typedef int (*disco_fitness_discrete)(void *);
+typedef size_t (*disco_fitness_nonnegative)(void *);
+typedef void * disco_state;
+typedef int (*disco_rng)();
+typedef void * (*disco_mutate)(void *);
 
 /* common options for all functions. all of these have sane defaults, specified
  * at bottom. */
-typedef void (*disco_print_fun)(void *);
-/* copy from argument 1 to argument 2 (which does not point to already allocated
+typedef void (*disco_print)(void *);
+/* copy from argument 1 to argument 2 (which /does/ point to already allocated
  * memory). return the newly constructed value. */
-typedef void * (*disco_copy_fun)(void *, void *);
-typedef void (*disco_destroy_fun)(void *);
+typedef void * (*disco_copy)(void *, void *);
+typedef void (*disco_destroy)(void *);
 /* TODO: make rng type (steal from somewhere) */
 
-struct disco_options {
-  disco_print_fun printf;
-  disco_copy_fun copy;
-  disco_destroy_fun destroy;
+typedef struct disco_options {
+  disco_print printf;
+  disco_copy copy;
+  disco_destroy destroy;
 };
-typedef struct disco_options * disco_opts_t;
 
-/* defaults for options */
-const struct disco_options DEFAULT_DISCO_OPTS_STRUCT = {NULL, NULL, NULL};
-const struct disco_options * const DEFAULT_DISCO_OPTS =
-    &DEFAULT_DISCO_OPTS_STRUCT;
-
+const disco_options DISCO_DEFAULT_OPTS;
+disco_options disco_default_opts();
+#define DISCO_CHECK_OPTS(opts) \
+  do {                         \
+    if (!opts.copy) {          \
+      return DISCO_MISSING_OP; \
+    }                          \
+    if (!opts.destroy) {       \
+      return DISCO_MISSING_OP; \
+    }                          \
+  } while (0)
 #endif /* __DISCO_TYPEDEFS_H__ */

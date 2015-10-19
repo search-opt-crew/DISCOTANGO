@@ -19,10 +19,9 @@
 #include "../common/error.h"
 #include "siman.h"
 
-disco_return_t disco_siman(disco_fitness_fun fit,
-                           disco_input_t input,
-                           disco_output_t output,
-                           disco_opts_t opts) {
+disco_return_t
+    disco_siman(disco_state_t input, disco_fitness_fun fit, disco_opts_t opts) {
   DISCO_CHECK_ARGS(fit, input, output);
+  DISCO_CHECK_OPTS(opts);
   return 0;
 }
