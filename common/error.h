@@ -43,7 +43,7 @@ bool disco_check_args(int, ...);
 
 #define DISCO_CHECK_OPTS(opts) \
   do {                         \
-    if (!opts.alloc) { \
+    if (!opts.alloc) {         \
       return DISCO_NO_ALLOC;   \
     }                          \
     if (!opts.copy) {          \

@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
 
-.PHONY: all clean test
+.PHONY: all clean test format
 
 # required for mersenne twister (sfmt) compilation
 DEFINES := -DSFMT_MEXP=19937
@@ -41,7 +41,8 @@ UNITY_DIRS := $(LIB_DIR)/Unity-master/src \
 UNITY_DEPS := $(wildcard $(addsuffix /*.h, $(UNITY_DIRS)))
 UNITY_IN := $(wildcard $(addsuffix /*.c, $(UNITY_DIRS)))
 
-CODE_DIRS := opt common rng $(MERSENNE_DIR)
+OUR_CODE_DIRS := opt common rng
+CODE_DIRS := $(OUR_CODE_DIRS) $(MERSENNE_DIR)
 TEST_DIR := test
 
 DEPS := $(wildcard $(addsuffix /*.h,$(CODE_DIRS)))
@@ -94,3 +95,9 @@ test: all $(TEST_BIN)
 
 clean:
 	rm -f $(OUT) $(BIN) $(TEST_BIN)
+
+format:
+	clang-format -i $(wildcard $(addsuffix /*.c,$(OUR_CODE_DIRS))) \
+		$(wildcard $(addsuffix /*.h,$(OUR_CODE_DIRS))) \
+		$(wildcard $(addsuffix /*.c,$(TEST_DIR))) \
+		$(wildcard $(addsuffix /*.h,$(TEST_DIR)))
