@@ -22,11 +22,13 @@
 
 int main() {
   disco_siman_options sopts;
-  disco_state test_inp = malloc(1);
+  disco_state test_in = malloc(1);
+  disco_state test_out = malloc(1);
   disco_options opts = disco_default_options();
-  disco_return_t ret = disco_siman(test_inp, sopts, opts);
+  disco_return_t ret = disco_siman(test_in, test_out, sopts, opts);
   printf("%zu\n", opts.rng.get(opts.rng.state));
-  free(test_inp);
+  free(test_in);
+  free(test_out);
   if (ret) {
     printf("%s\n", disco_errstr(ret));
   } else {

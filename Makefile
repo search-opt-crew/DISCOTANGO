@@ -39,6 +39,8 @@ DEPS := $(wildcard $(addsuffix /*.h,$(CODE_DIRS)))
 IN := $(wildcard $(addsuffix /*.c,$(CODE_DIRS)))
 OUT := $(addprefix $(BUILD_DIR)/,$(notdir $(IN:%.c=%.o)))
 
+TEST_IN := $(wildcard $(TEST_DIR)/*.c)
+
 # the $(OUT) transformation relies on every .c filename being unique within the
 # codebase. this allows us to output all the .o files into build/{debug,release}
 # in a single flat folder, and to use vpath
@@ -61,8 +63,8 @@ BIN := $(STATIC) $(DYNAMIC) $(TEST_BIN)
 
 all: $(BIN)
 
-$(TEST_BIN): $(OUT) $(STATIC)
-	$(CC) $(CC_OPTS) $(LINK_OPTS) -o $@ $(TEST_DIR)/test.c $(STATIC)
+$(TEST_BIN): $(OUT) $(STATIC) $(TEST_IN)
+	$(CC) $(CC_OPTS) $(LINK_OPTS) -o $@ $(TEST_IN) $(STATIC)
 
 # search all code directories for build files
 vpath %.h $(CODE_DIRS)

@@ -24,6 +24,7 @@ disco_options disco_default_options() {
   disco_options opts = {.printf = NULL,
                         .copy = memcpy,
                         .destroy = free,
-                        .rng = disco_default_rng()};
+                        .rng = disco_default_rng(),
+                        .len = 0};
   return opts;
 }

@@ -18,11 +18,14 @@
 
 #include "siman.h"
 
-disco_return_t disco_siman(disco_state input,
+disco_return_t disco_siman(disco_state_const input,
+                           disco_state output,
                            disco_siman_options siman_opts
                            __attribute__((__unused__)),
                            disco_options opts) {
   DISCO_CHECK_ARGS(input);
   DISCO_CHECK_OPTS(opts);
+  /* copies input to output; technically not wrong! */
+  opts.copy(output, input, opts.len);
   return 0;
 }

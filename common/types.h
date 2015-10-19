@@ -27,25 +27,27 @@
 /* arguments which can be used by all functions in the library. if you must
  * make a new type of argument, add it here, then add it to your function. */
 typedef int disco_return_t;
-typedef double (*disco_fitness)(void *);
-typedef int (*disco_fitness_discrete)(void *);
-typedef size_t (*disco_fitness_nonnegative)(void *);
 typedef void * disco_state;
-typedef void * (*disco_mutate)(void *);
+typedef const void * disco_state_const;
+typedef double (*disco_fitness)(disco_state);
+typedef int (*disco_fitness_discrete)(disco_state);
+typedef size_t (*disco_fitness_nonnegative)(disco_state);
+typedef disco_state (*disco_mutate)(disco_state);
 
 /* common options for all functions. all of these have sane defaults, specified
  * at bottom. */
-typedef void (*disco_print)(void *);
+typedef void (*disco_print)(disco_state);
 /* copy from argument 2 to argument 1 (which /does/ point to already allocated
  * memory). return the newly constructed value. */
-typedef void * (*disco_copy)(void *, const void *, size_t);
-typedef void (*disco_destroy)(void *);
+typedef disco_state (*disco_copy)(disco_state, disco_state_const, size_t);
+typedef void (*disco_destroy)(disco_state);
 
 typedef struct {
   disco_print printf;
   disco_copy copy;
   disco_destroy destroy;
   disco_rng rng;
+  size_t len; /* size of disco_state used in problem */
 } disco_options;
 
 disco_options disco_default_options();
