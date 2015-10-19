@@ -32,7 +32,8 @@ endif
 
 CC := gcc
 
-CODE_DIRS := opt common rng test
+CODE_DIRS := opt common rng
+TEST_DIR := test
 
 DEPS := $(wildcard $(addsuffix /*.h,$(CODE_DIRS)))
 IN := $(wildcard $(addsuffix /*.c,$(CODE_DIRS)))
@@ -73,7 +74,7 @@ $(STATIC): $(OUT)
 	ar rcs $@ $^
 
 $(TEST_BIN): $(OUT) $(STATIC)
-	$(CC) $(LINK_OPTS) -o $@ $(BUILD_DIR)/test.o $(STATIC)
+	$(CC) $(CC_OPTS) $(LINK_OPTS) -o $@ $(TEST_DIR)/test.c $(STATIC)
 
 clean:
 	rm -f $(OUT) $(BIN)
