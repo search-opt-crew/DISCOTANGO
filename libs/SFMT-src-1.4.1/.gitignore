@@ -1,0 +1,4 @@
+*.txt
+!LICENSE.txt
+test-*
+*.csv

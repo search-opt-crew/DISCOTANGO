@@ -16,7 +16,8 @@
 
 .PHONY: all clean test
 
-CC_OPTS := -std=c99 -Wall -Wextra -Werror
+DEFINES := -DSFMT_MEXP=19937
+CC_OPTS := -std=c99 -Wall -Wextra -Werror $(DEFINES)
 LINK_OPTS :=
 
 BUILD_BASE := build
@@ -32,7 +33,12 @@ endif
 
 CC := gcc
 
-CODE_DIRS := opt common rng
+LIB_DIR := libs
+MERSENNE_DIR := $(LIB_DIR)/SFMT-src-1.4.1
+MERSENNE_DEPS := $(wildcard $(MERSENNE_DIR)/*.h)
+MERSENNE_IN := $(wildcard $(MERSENNE_DIR)/*.c)
+
+CODE_DIRS := opt common rng $(MERSENNE_DIR)
 TEST_DIR := test
 
 DEPS := $(wildcard $(addsuffix /*.h,$(CODE_DIRS)))

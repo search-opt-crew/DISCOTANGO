@@ -20,10 +20,11 @@
  */
 
 #include <stddef.h>
+#include "../libs/SFMT-src-1.4.1/SFMT.h"
 
-typedef size_t disco_rng_return_t;
+typedef uint32_t disco_rng_return_t;
 
-typedef unsigned long disco_rng_state;
+typedef sfmt_t disco_rng_state;
 
 typedef disco_rng_return_t (*disco_get_random)(disco_rng_state *);
 
