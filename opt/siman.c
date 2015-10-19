@@ -72,8 +72,9 @@ disco_return_t disco_siman(disco_state_const input,
       opts.copy(new_x, x, opts.len);
       step(new_x, opts.rng, siman_opts.step_size);
       new_E = fit(new_x);
-
-      ++n_evals;
+      if (opts.prints && opts.printv) {
+        ++n_evals;
+      }
       /* small optimization here; record best even if it wouldn't have jumped
        * to the state */
       if (new_E < best_E) {
@@ -89,7 +90,7 @@ disco_return_t disco_siman(disco_state_const input,
         E = new_E;
       }
     }
-    if (opts.printv && opts.prints) {
+    if (opts.prints && opts.printv) {
       opts.prints("%7d  %12g", n_evals, T);
       opts.printv(x);
       opts.prints("  %12g  %12g\n", E, best_E);
