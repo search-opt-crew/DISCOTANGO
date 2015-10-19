@@ -19,13 +19,13 @@
 #include "rng.h"
 
 /* TODO: add real random function */
-disco_rng_return_t disco_default_get_rng(disco_rng_state st) {
-  if (st > 0) {
-    st = 0;
+disco_rng_return_t disco_default_get_rng(disco_rng_state * st) {
+  if (*st > 0) {
+    *st = 0;
   } else {
-    st = 1;
+    *st = 1;
   }
-  return st;
+  return *st;
 }
 
 disco_rng disco_default_rng() {

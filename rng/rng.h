@@ -25,8 +25,10 @@ typedef size_t disco_rng_return_t;
 
 typedef unsigned long disco_rng_state;
 
-typedef disco_rng_return_t (*disco_get_random)(disco_rng_state);
+typedef disco_rng_return_t (*disco_get_random)(disco_rng_state *);
 
+/* assumes it will be run on itself, so disco_get_random functions assume the
+ * pointer passed to them is valid and DO NOT CHECK FOR NULL. */
 typedef struct {
   disco_get_random get;
   disco_rng_state state;
