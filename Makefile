@@ -61,6 +61,9 @@ BIN := $(STATIC) $(DYNAMIC) $(TEST_BIN)
 
 all: $(BIN)
 
+$(TEST_BIN): $(OUT) $(STATIC)
+	$(CC) $(CC_OPTS) $(LINK_OPTS) -o $@ $(TEST_DIR)/test.c $(STATIC)
+
 # search all code directories for build files
 vpath %.h $(CODE_DIRS)
 vpath %.c $(CODE_DIRS)
@@ -72,9 +75,6 @@ $(DYNAMIC): $(OUT)
 
 $(STATIC): $(OUT)
 	ar rcs $@ $^
-
-$(TEST_BIN): $(OUT) $(STATIC)
-	$(CC) $(CC_OPTS) $(LINK_OPTS) -o $@ $(TEST_DIR)/test.c $(STATIC)
 
 clean:
 	rm -f $(OUT) $(BIN)
