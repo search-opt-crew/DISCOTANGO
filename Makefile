@@ -88,5 +88,5 @@ $(STATIC): $(OUT)
 clean:
 	rm -f $(OUT) $(BIN)
 
-test:
+test: all
 	exec $(TEST_BIN)
