@@ -46,7 +46,8 @@ CODE_DIRS := $(OUR_CODE_DIRS) $(MERSENNE_DIR)
 TEST_DIR := test
 
 DEPS := $(wildcard $(addsuffix /*.h,$(CODE_DIRS)))
-IN := $(wildcard $(addsuffix /*.c,$(CODE_DIRS)))
+IN := $(subst $(MERSENNE_DIR)/test.c,, \
+	$(wildcard $(addsuffix /*.c,$(CODE_DIRS))))
 OUT := $(addprefix $(BUILD_DIR)/,$(notdir $(IN:%.c=%.o)))
 
 TEST_DEPS := $(wildcard $(TEST_DIR)/*.h) $(UNITY_DEPS)
