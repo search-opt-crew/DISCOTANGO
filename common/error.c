@@ -26,7 +26,8 @@ const disco_return_t DISCO_NULL_ARG = -1;
 const disco_return_t DISCO_NO_ALLOC = -2;
 const disco_return_t DISCO_NO_COPY = -3;
 const disco_return_t DISCO_NO_DESTROY = -4;
-const disco_return_t DISCO_NO_FUN = -5;
+const disco_return_t DISCO_NO_PRINT = -5;
+const disco_return_t DISCO_NO_FUN = -6;
 
 /* wish there was a more reliable way to report error values that didn't require
  * giving the same error code twice, but C macros don't really give us much
@@ -46,6 +47,8 @@ const char * disco_errstr(disco_return_t err) {
   case -4:
     return DISCO_ERRSTR(DISCO_NO_DESTROY, "destroy operation is null");
   case -5:
+    return DISCO_ERRSTR(DISCO_NO_PRINT, "print functions not given");
+  case -6:
     return DISCO_ERRSTR(DISCO_NO_FUN, "required function was not provided");
   default:
     return disco_unrecognized_error;

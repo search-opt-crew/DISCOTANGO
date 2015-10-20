@@ -63,7 +63,7 @@ disco_return_t disco_siman(disco_state_const input,
   E = fit(input);
   best_E = E;
 
-  if (opts.prints && opts.printv) {
+  if (opts.do_print) {
     opts.prints("#-evals   temperature     position   energy\n");
   }
 
@@ -90,7 +90,7 @@ disco_return_t disco_siman(disco_state_const input,
         E = new_E;
       }
     }
-    if (opts.prints && opts.printv) {
+    if (opts.do_print) {
       opts.prints("%7d  %12g", n_evals, T);
       opts.printv(x);
       opts.prints("  %12g  %12g\n", E, best_E);

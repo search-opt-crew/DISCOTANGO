@@ -49,6 +49,7 @@ typedef void (*disco_destroy)(disco_state);
 typedef struct {
   disco_print_str prints;
   disco_print_val printv;
+  bool do_print;
   disco_alloc alloc;
   disco_copy copy;
   disco_destroy destroy;

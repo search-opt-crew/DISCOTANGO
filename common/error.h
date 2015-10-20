@@ -26,6 +26,7 @@ const disco_return_t DISCO_NULL_ARG;
 const disco_return_t DISCO_NO_ALLOC;
 const disco_return_t DISCO_NO_COPY;
 const disco_return_t DISCO_NO_DESTROY;
+const disco_return_t DISCO_NO_PRINT;
 const disco_return_t DISCO_NO_FUN;
 
 const char * disco_errstr(disco_return_t);
@@ -42,17 +43,20 @@ bool disco_check_args(int, ...);
 #define DISCO_CHECK_ARGS(...) DISCO_CHECK_MACRO(DISCO_NULL_ARG, __VA_ARGS__)
 #define DISCO_CHECK_FUNS(...) DISCO_CHECK_MACRO(DISCO_NO_FUN, __VA_ARGS__)
 
-#define DISCO_CHECK_OPTS(opts) \
-  do {                         \
-    if (!opts.alloc) {         \
-      return DISCO_NO_ALLOC;   \
-    }                          \
-    if (!opts.copy) {          \
-      return DISCO_NO_COPY;    \
-    }                          \
-    if (!opts.destroy) {       \
-      return DISCO_NO_DESTROY; \
-    }                          \
+#define DISCO_CHECK_OPTS(opts)                            \
+  do {                                                    \
+    if (!opts.alloc) {                                    \
+      return DISCO_NO_ALLOC;                              \
+    }                                                     \
+    if (!opts.copy) {                                     \
+      return DISCO_NO_COPY;                               \
+    }                                                     \
+    if (!opts.destroy) {                                  \
+      return DISCO_NO_DESTROY;                            \
+    }                                                     \
+    if (opts.do_print && !(opts.prints && opts.printv)) { \
+      return DISCO_NO_PRINT;                              \
+    }                                                     \
   } while (0)
 
 #endif /* __DISCO_ERROR_H__ */
