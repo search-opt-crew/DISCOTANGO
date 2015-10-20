@@ -40,11 +40,11 @@ const char * disco_errstr(disco_return_t err) {
   case -1:
     return DISCO_ERRSTR(DISCO_NULL_ARG, "null argument");
   case -2:
-    return DISCO_ERRSTR(DISCO_NO_ALLOC, "no alloc operation");
+    return DISCO_ERRSTR(DISCO_NO_ALLOC, "alloc operation is null");
   case -3:
-    return DISCO_ERRSTR(DISCO_NO_COPY, "no copy operation");
+    return DISCO_ERRSTR(DISCO_NO_COPY, "copy operation is null");
   case -4:
-    return DISCO_ERRSTR(DISCO_NO_DESTROY, "no destroy operation");
+    return DISCO_ERRSTR(DISCO_NO_DESTROY, "destroy operation is null");
   case -5:
     return DISCO_ERRSTR(DISCO_NO_FUN, "required function was not provided");
   default:
