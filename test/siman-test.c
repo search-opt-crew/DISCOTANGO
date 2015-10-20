@@ -62,10 +62,10 @@ TEST(siman, EqualsGSL) {
   *((double *) test_in) = 0;
   disco_options opts = disco_default_options(sizeof(double));
   disco_return_t ret = disco_siman(test_in, test_out, E1, M1, S1, sopts, opts);
+  TEST_ASSERT_EQUAL_MESSAGE(0, ret, disco_errstr(ret));
   TEST_ASSERT_FLOAT_WITHIN_MESSAGE(TEST_FLOAT_TOLERANCE, 1.363131,
                                    *((double *) test_out),
                                    "should be 1.363131");
-  TEST_ASSERT_EQUAL(0, ret);
   free(test_in);
   free(test_out);
 }
