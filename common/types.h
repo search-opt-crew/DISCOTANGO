@@ -30,11 +30,8 @@ typedef int disco_return_t;
 typedef void * disco_state;
 typedef const void * disco_state_const;
 typedef double (*disco_fitness)(disco_state_const);
-typedef int (*disco_fitness_discrete)(disco_state_const);
-typedef size_t (*disco_fitness_nonnegative)(disco_state_const);
-typedef disco_state (*disco_mutate)(disco_state, disco_rng);
 typedef disco_state (*disco_step)(disco_state, disco_rng, double);
-typedef double (*disco_metric)(disco_state, disco_state);
+typedef double (*disco_metric)(disco_state_const, disco_state_const);
 
 /* common options for all functions. all of these have sane defaults, specified
  * at bottom. */
