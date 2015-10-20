@@ -21,6 +21,7 @@
 
 #define DISCO_ERRSTR(codename, errstr) ("DISCOTANGO: " #codename ": " errstr)
 
+const disco_return_t DISCO_SUCCESS = 0;
 const disco_return_t DISCO_NULL_ARG = -1;
 const disco_return_t DISCO_NO_ALLOC = -2;
 const disco_return_t DISCO_NO_COPY = -3;
@@ -34,6 +35,8 @@ static const char * disco_unrecognized_error =
     "DISCOTANGO: unrecognized error code";
 const char * disco_errstr(disco_return_t err) {
   switch (err) {
+  case 0:
+    return DISCO_ERRSTR(DISCO_SUCCESS, "success");
   case -1:
     return DISCO_ERRSTR(DISCO_NULL_ARG, "null argument");
   case -2:

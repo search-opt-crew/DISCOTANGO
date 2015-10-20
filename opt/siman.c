@@ -52,7 +52,7 @@ disco_return_t disco_siman(disco_state_const input,
   disco_state x, new_x, best_x;
   double E, new_E, best_E;
   double T = siman_opts.t_init, T_factor = 1.0 / siman_opts.mu_t;
-  size_t i, n_evals = 1;
+  size_t i, n_evals = 0;
 
   x = opts.alloc(opts.len);
   new_x = opts.alloc(opts.len);
@@ -105,5 +105,5 @@ disco_return_t disco_siman(disco_state_const input,
   opts.destroy(x);
   opts.destroy(new_x);
   opts.destroy(best_x);
-  return 0;
+  return DISCO_SUCCESS;
 }

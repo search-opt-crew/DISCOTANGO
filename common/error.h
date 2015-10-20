@@ -21,6 +21,7 @@
 
 #include "types.h"
 
+const disco_return_t DISCO_SUCCESS;
 const disco_return_t DISCO_NULL_ARG;
 const disco_return_t DISCO_NO_ALLOC;
 const disco_return_t DISCO_NO_COPY;
