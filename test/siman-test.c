@@ -57,10 +57,11 @@ TEST_TEAR_DOWN(siman) {
 
 TEST(siman, EqualsGSL) {
   disco_siman_options sopts = disco_siman_default_options();
-  disco_state test_in = malloc(sizeof(double)),
-              test_out = malloc(sizeof(double));
+  size_t data_size = sizeof(double);
+  disco_state test_in = malloc(data_size),
+              test_out = malloc(data_size);
   *((double *) test_in) = 0;
-  disco_options opts = disco_default_options(sizeof(double));
+  disco_options opts = disco_default_options(data_size);
   disco_return_t ret = disco_siman(test_in, test_out, E1, M1, S1, sopts, opts);
   TEST_ASSERT_EQUAL_MESSAGE(0, ret, disco_errstr(ret));
   TEST_ASSERT_FLOAT_WITHIN_MESSAGE(TEST_FLOAT_TOLERANCE, 1.363131,
