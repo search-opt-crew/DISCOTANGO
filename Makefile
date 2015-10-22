@@ -38,10 +38,6 @@ LIB_DIR := libs
 MERSENNE_DIR := $(LIB_DIR)/SFMT-src-1.4.1
 UNITY_DIR := $(LIB_DIR)/Unity
 UNITY_DIRS := $(UNITY_DIR)/src $(UNITY_DIR)/extras/fixture/src
-# set to = macro, not :=, because files are added after git submodule
-# operations, which occurs during the make process
-UNITY_DEPS = $(wildcard $(addsuffix /*.h, $(UNITY_DIRS)))
-UNITY_IN = $(wildcard $(addsuffix /*.c, $(UNITY_DIRS)))
 
 OUR_CODE_DIRS := opt common rng
 CODE_DIRS := $(OUR_CODE_DIRS) $(MERSENNE_DIR)
@@ -51,10 +47,6 @@ DEPS := $(wildcard $(addsuffix /*.h,$(CODE_DIRS)))
 IN := $(subst $(MERSENNE_DIR)/test.c,, \
 	$(wildcard $(addsuffix /*.c,$(CODE_DIRS))))
 OUT := $(addprefix $(BUILD_DIR)/,$(notdir $(IN:%.c=%.o)))
-
-# see $(UNITY_DEPS) above; set to = macro because of git submodule
-TEST_DEPS = $(wildcard $(TEST_DIR)/*.h) $(UNITY_DEPS)
-TEST_IN = $(wildcard $(TEST_DIR)/*.c) $(UNITY_IN)
 
 # the $(OUT) transformation relies on every .c filename being unique within the
 # codebase. this allows us to output all the .o files into build/{debug,release}
@@ -90,9 +82,9 @@ $(STATIC): $(OUT)
 	ar rcs $@ $^
 
 TEST_BIN := $(BUILD_DIR)/test
-$(TEST_BIN): $(OUT) $(STATIC) $(TEST_IN) $(TEST_DEPS) $(UNITY_DIRS)
+$(TEST_BIN): $(OUT) $(STATIC) $(UNITY_DIRS)
 	$(CC) $(addprefix -I,$(UNITY_DIRS)) $(ALL_CC_OPTS) -g -O0 $(LINK_OPTS) \
-		-o $@ $(TEST_IN) $(STATIC)
+		-o $@ $(TEST_DIR)/*.c $(addsuffix /*.c, $(UNITY_DIRS)) $(STATIC)
 
 $(UNITY_DIRS):
 	git submodule update --init --recursive
