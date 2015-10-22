@@ -1,0 +1,5 @@
+[submodule "libs/Unity"]
+	path = libs/Unity
+	url = git@github.com:cosmicexplorer/Unity.git
+        branch = master
+        ignore = dirty

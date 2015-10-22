@@ -18,17 +18,17 @@
 
 # required for mersenne twister (sfmt) compilation
 DEFINES := -DSFMT_MEXP=19937
-CC_OPTS := -std=c99 -Wall -Wextra -Werror $(DEFINES)
+ALL_CC_OPTS := -std=c99 -Wall -Wextra -Werror $(DEFINES)
 LINK_OPTS := -lm
 
 BUILD_BASE := build
 
 RELEASE ?= 0
 ifeq ($(RELEASE),0)
-CC_OPTS += -DDEBUG -g -O0
+CC_OPTS := $(ALL_CC_OPTS) -DDEBUG -g -O0
 BUILD_DIR := $(BUILD_BASE)/debug
 else
-CC_OPTS += -DRELEASE -O3
+CC_OPTS := $(ALL_CC_OPTS) -DRELEASE -O3
 BUILD_DIR := $(BUILD_BASE)/release
 endif
 
@@ -36,8 +36,8 @@ CC := gcc
 
 LIB_DIR := libs
 MERSENNE_DIR := $(LIB_DIR)/SFMT-src-1.4.1
-UNITY_DIRS := $(LIB_DIR)/Unity-master/src \
-	$(LIB_DIR)/Unity-master/extras/fixture/src
+UNITY_DIR := $(LIB_DIR)/Unity
+UNITY_DIRS := $(UNITY_DIR)/src $(UNITY_DIR)/extras/fixture/src
 UNITY_DEPS := $(wildcard $(addsuffix /*.h, $(UNITY_DIRS)))
 UNITY_IN := $(wildcard $(addsuffix /*.c, $(UNITY_DIRS)))
 
@@ -87,9 +87,13 @@ $(STATIC): $(OUT)
 	ar rcs $@ $^
 
 TEST_BIN := $(BUILD_DIR)/test
-$(TEST_BIN): $(OUT) $(STATIC) $(TEST_IN) $(TEST_DEPS)
-	$(CC) $(addprefix -I,$(UNITY_DIRS)) $(CC_OPTS) $(LINK_OPTS) -o $@ \
-		$(TEST_IN) $(STATIC)
+$(TEST_BIN): $(OUT) $(STATIC) $(TEST_IN) $(TEST_DEPS) $(UNITY_DIRS)
+	$(CC) $(addprefix -I,$(UNITY_DIRS)) $(ALL_CC_OPTS) -g -O0 $(LINK_OPTS) \
+		-o $@ $(TEST_IN) $(STATIC)
+
+$(UNITY_DIRS):
+	git submodule update --init --recursive
+	git submodule foreach git pull origin master
 
 test: all $(TEST_BIN)
 	exec $(TEST_BIN)

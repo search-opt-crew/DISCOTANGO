@@ -20,8 +20,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../opt/siman.h"
-#include "../libs/Unity-master/src/unity.h"
-#include "../libs/Unity-master/extras/fixture/src/unity_fixture.h"
+#include "../libs/Unity/src/unity.h"
+#include "../libs/Unity/extras/fixture/src/unity_fixture.h"
 
 /* drawn from
  * https://www.gnu.org/software/gsl/manual/html_node/Trivial-example.html */

@@ -16,7 +16,7 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../libs/Unity-master/extras/fixture/src/unity_fixture.h"
+#include "../libs/Unity/extras/fixture/src/unity_fixture.h"
 
 static void RunAllTests() {
   RUN_TEST_GROUP(siman);
