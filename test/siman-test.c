@@ -23,9 +23,6 @@
 #include "../libs/Unity/src/unity.h"
 #include "../libs/Unity/extras/fixture/src/unity_fixture.h"
 
-/* drawn from
- * https://www.gnu.org/software/gsl/manual/html_node/Trivial-example.html */
-
 double E1(disco_state_const xp) {
   double x = *((double *) xp);
   return exp(-pow((x - 1), 2)) * sin(8 * x);

@@ -20,7 +20,7 @@
 #include "../common/constants.h"
 #include "siman.h"
 
-double boltzmann(double E, double new_E, double T, double k) {
+double disco_boltzmann(double E, double new_E, double T, double k) {
   double x = -(new_E - E) / (k * T);
   /* avoid underflow errors for large uphill steps */
   return (x < DISCO_LOG_DBL_MIN) ? 0.0 : exp(x);
@@ -85,7 +85,7 @@ disco_return_t disco_siman(disco_state_const input,
         opts.copy(x, new_x, opts.len);
         E = new_E;
       } else if (opts.rng.get_double(&opts.rng.state) <
-                 boltzmann(E, new_E, T, siman_opts.k)) {
+                 disco_boltzmann(E, new_E, T, siman_opts.k)) {
         opts.copy(x, new_x, opts.len);
         E = new_E;
       }

@@ -21,8 +21,6 @@
 
 #include "../common/error.h"
 
-/* heavily drawn from the gsl_siman_solve routine in gnu gsl */
-
 typedef struct {
   size_t tries_per_step;
   size_t iters_per_temp;
