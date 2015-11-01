@@ -68,7 +68,7 @@ We wish 2 achieve massive speed 4 great good.
 
 - [ ] timeout or fixed iteration count
   - requires alg to keep some state somehow
-- [ ] Matrix ops: ALTAS & its variants
+- [ ] Matrix ops: ATLAS & its variants
 - [ ] Multi-CPU
 - [ ] Multi-process/threads
 - [ ] use GPU
