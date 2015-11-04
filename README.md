@@ -10,7 +10,7 @@ We're writing this to expose some cool algorithms to the general public who may 
 To that end, while we appreciate the thoroughness with which libraries like [gsl](https://www.gnu.org/software/gsl/) are able to fine-tune their output, accepting 11 parameters as in [gsl_siman_solve](https://www.gnu.org/software/gsl/manual/html_node/Trivial-example.html) is a bit much. Like most other C libraries, DISCOTANGO exposes functions and structs. The interface is typically:
 
 ```c
-int disco_some_fun(disco_fitness_fun,
+int disco_some_fun(disco_fitness,
                    other_args...,
                    disco_options);
 ```
@@ -25,7 +25,7 @@ Use as many as you want! Just put them in the [libs](libs/) directory and add th
 
 ## Testing
 
-We're using a fork of [Unity](https://github.com/cosmicexplorer/Unity). Use this and test all functions as extensively as possible. Check out [test](test/) for examples.
+We're using a fork of [Unity](https://github.com/cosmicexplorer/Unity). Use this and test all exported functions as extensively as possible. Check out [test](test/) for examples.
 
 # Hit List
 
@@ -35,10 +35,10 @@ In [opt](opt/). Take a good hard look at [gsl](https://www.gnu.org/software/gsl/
 
 Algorithms:
 
-- [ ] simulated annealing [link](http://katrinaeg.com/simulated-annealing.html)
-- [ ] simplex [link](http://www.zweigmedia.com/RealWorld/tutorialsf4/frames4_3.html)
+- [x] simulated annealing [link](http://katrinaeg.com/simulated-annealing.html)
+- [ ] simplex (anna) [link](http://www.zweigmedia.com/RealWorld/tutorialsf4/frames4_3.html)
 - [ ] linear programming
-- [ ] genetic programming [link](http://www.doc.ic.ac.uk/~nd/surprise_96/journal/vol1/hmw/article1.html)
+- [ ] genetic programming (danny) [link](http://www.doc.ic.ac.uk/~nd/surprise_96/journal/vol1/hmw/article1.html)
 - [ ] ...
 
 ## Search
@@ -47,7 +47,7 @@ In [search](search/).
 
 Algorithms:
 
-- [ ] Boyer-Moore
+- [ ] Boyer-Moore (max)
 - [ ] Levenshtein fuzzy matching
 - [ ] A*
 - [ ] Union-Find
