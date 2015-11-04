@@ -82,9 +82,10 @@ $(STATIC): $(OUT)
 	ar rcs $@ $^
 
 TEST_BIN := $(BUILD_DIR)/test
-$(TEST_BIN): $(OUT) $(STATIC) $(UNITY_DIRS)
+$(TEST_BIN): $(OUT) $(STATIC) $(UNITY_DIRS) $(wildcard $(TEST_DIR)/*.c)
 	$(CC) $(addprefix -I,$(UNITY_DIRS)) $(ALL_CC_OPTS) -g -O0 $(LINK_OPTS) \
-		-o $@ $(TEST_DIR)/*.c $(addsuffix /*.c, $(UNITY_DIRS)) $(STATIC)
+		-o $@ $(wildcard $(TEST_DIR)/*.c) \
+		$(addsuffix /*.c, $(UNITY_DIRS)) $(STATIC)
 
 $(UNITY_DIRS):
 	git submodule update --init --recursive

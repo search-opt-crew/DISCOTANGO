@@ -15,7 +15,7 @@ int disco_some_fun(disco_fitness_fun,
                    disco_options);
 ```
 
-As you can see above, we use `under_scores`, and prefer the `disco` prefix for all non-static symbols. `disco_fitness_fun` is a typedef found in [typedefs.h](common/typedefs.h). `other_args` depends upon the specific function called. *Note that `other_args` is not variadic, the ellipses are just for description*. `disco_options` is a struct containing common parameters to function calls, including an RNG, and constructor/destructors for any data. All exported functions should return `int`, which will be `0` on success, and some standardized error code on failure.
+As you can see above, we use `under_scores`, and prefer the `disco` prefix for all non-static symbols. `disco_fitness` is a typedef found in [typedefs.h](common/typedefs.h). `other_args` depends upon the specific function called. *Note that `other_args` is not variadic, the ellipses are just for description*. `disco_options` is a struct containing common parameters to function calls, including an RNG, and constructor/destructors for any data. All exported functions should return `int`, which will be `0` on success, and some standardized error code on failure.
 
 Each exported function should be defined in its own `.c` and `.h` file. Naming should be `lowercase-with-hyphens`. The LGPL notice should be on top of all files; add your name to the `Copyright (c) 2015 <names>` line on any file you modify.
 
@@ -25,7 +25,7 @@ Use as many as you want! Just put them in the [libs](libs/) directory and add th
 
 ## Testing
 
-We need a unit test suite! We're not releasing any code without testing, and no algorithm is to be checked off below until tests are made and pass. There seem to be plenty of C unit test frameworks on the internet, but none of them seem any good. We'll need to figure this out when we start finishing off algorithms.
+We're using a fork of [Unity](https://github.com/cosmicexplorer/Unity). Use this and test all functions as extensively as possible. Check out [test](test/) for examples.
 
 # Hit List
 
