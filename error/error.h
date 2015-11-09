@@ -26,7 +26,6 @@ const disco_return_t DISCO_NULL_ARG;
 const disco_return_t DISCO_NO_ALLOC;
 const disco_return_t DISCO_NO_COPY;
 const disco_return_t DISCO_NO_DESTROY;
-const disco_return_t DISCO_NO_PRINT;
 const disco_return_t DISCO_NO_FUN;
 const disco_return_t DISCO_NO_RNG_32;
 const disco_return_t DISCO_NO_RNG_64;
@@ -56,9 +55,6 @@ bool disco_check_args(int, ...);
     }                                                     \
     if (!opts.destroy) {                                  \
       return DISCO_NO_DESTROY;                            \
-    }                                                     \
-    if (opts.do_print && !(opts.prints && opts.printv)) { \
-      return DISCO_NO_PRINT;                              \
     }                                                     \
     DISCO_CHECK_RNG(opts.rng);                            \
   } while (0)

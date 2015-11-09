@@ -63,10 +63,6 @@ disco_return_t disco_siman(disco_state_const input,
   E = fit(input);
   best_E = E;
 
-  if (opts.do_print) {
-    opts.prints("#-evals   temperature     position   energy\n");
-  }
-
   while (1) {
     for (size_t i = 0; i < siman_opts.iters_per_temp; ++i) {
       opts.copy(new_x, x, opts.len);
@@ -87,10 +83,8 @@ disco_return_t disco_siman(disco_state_const input,
         E = new_E;
       }
     }
-    if (opts.do_print) {
-      opts.prints("%7d  %12g", i * siman_opts.iters_per_temp, T);
-      opts.printv(x);
-      opts.prints("  %12g  %12g\n", E, best_E);
+    if (opts.notify) {
+      opts.notify(new_x, new_E);
     }
 
     T *= T_factor;

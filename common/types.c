@@ -22,9 +22,7 @@
 #include "types.h"
 
 disco_options disco_default_options(size_t len) {
-  disco_options opts = {.prints = printf,
-                        .printv = NULL,
-                        .do_print = false,
+  disco_options opts = {.notify = NULL,
                         .alloc = malloc,
                         .copy = memcpy,
                         .destroy = free,

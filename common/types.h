@@ -29,7 +29,6 @@
 typedef int disco_return_t;
 typedef void * disco_state;
 typedef const void * disco_state_const;
-typedef const void ** disco_state_many_const;
 typedef double (*disco_fitness)(disco_state_const);
 typedef disco_state (*disco_step)(disco_state, disco_rng, double);
 typedef disco_state (*disco_mutate)(disco_state, disco_rng);
@@ -37,8 +36,7 @@ typedef double (*disco_metric)(disco_state_const, disco_state_const);
 
 /* common options for all functions. all of these have sane defaults, specified
  * at bottom. */
-typedef int (*disco_print_str)(const char *, ...);
-typedef int (*disco_print_val)(disco_state);
+typedef void (*disco_notify)(disco_state_const, double);
 typedef disco_state (*disco_alloc)(size_t);
 /* copy from argument 2 to argument 1 (which /does/ point to already allocated
  * memory). return the newly constructed value. */
@@ -46,9 +44,7 @@ typedef disco_state (*disco_copy)(disco_state, disco_state_const, size_t);
 typedef void (*disco_destroy)(disco_state);
 
 typedef struct disco_options_struct {
-  disco_print_str prints;
-  disco_print_val printv;
-  bool do_print;
+  disco_notify notify;
   disco_alloc alloc;
   disco_copy copy;
   disco_destroy destroy;
