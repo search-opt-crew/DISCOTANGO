@@ -43,8 +43,8 @@ bool disco_check_args(int, ...);
       return err;                                                    \
     }                                                                \
   } while (0)
-#define DISCO_CHECK_ARGS(...) DISCO_CHECK_MACRO(DISCO_NULL_ARG, __VA_ARGS__)
-#define DISCO_CHECK_FUNS(...) DISCO_CHECK_MACRO(DISCO_NO_FUN, __VA_ARGS__)
+#define DISCO_NEED_ARGS(...) DISCO_CHECK_MACRO(DISCO_NULL_ARG, __VA_ARGS__)
+#define DISCO_NEED_FUNS(...) DISCO_CHECK_MACRO(DISCO_NO_FUN, __VA_ARGS__)
 
 #define DISCO_CHECK_OPTS(opts)                      \
   do {                                              \

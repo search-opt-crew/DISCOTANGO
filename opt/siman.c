@@ -46,9 +46,9 @@ disco_return_t disco_siman(disco_state_const input,
                            disco_step step,
                            disco_siman_options siman_opts,
                            disco_options opts) {
-  DISCO_CHECK_ARGS(input, output);
+  DISCO_NEED_ARGS(input, output);
   DISCO_CHECK_OPTS(opts);
-  DISCO_CHECK_FUNS(fit, metric, step);
+  DISCO_NEED_FUNS(fit, metric, step);
 
   disco_state x, new_x, best_x;
   double E, new_E, best_E;

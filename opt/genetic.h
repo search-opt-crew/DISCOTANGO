@@ -36,7 +36,7 @@ disco_genetic_options disco_genetic_default_options();
 disco_return_t disco_genetic(disco_state_many_const,
                              disco_state,
                              disco_fitness,
-                             disco_mutate,
+                             disco_step,
                              disco_genetic_crossover,
                              disco_genetic_options,
                              disco_options);

@@ -31,22 +31,33 @@ disco_genetic_options disco_genetic_default_options() {
 disco_return_t disco_genetic(disco_state_many_const input_set,
                              disco_state output,
                              disco_fitness fit,
-                             disco_mutate mutate,
+                             disco_step mutate,
                              disco_genetic_crossover cross,
                              disco_genetic_options genetic_opts,
                              disco_options opts) {
-  DISCO_CHECK_ARGS(input_set, output);
+  DISCO_NEED_ARGS(input_set, output);
   DISCO_CHECK_OPTS(opts);
-  DISCO_CHECK_FUNS(fit, mutate, cross);
+  DISCO_NEED_FUNS(fit, mutate, cross);
   DISCO_NEED_NOTIFY(opts.notify);
 
   disco_state_many population =
       opts.alloc(opts.len * genetic_opts.population_size);
+  disco_state best = opts.alloc(opts.len);
+  double best_E = 0, E = 0;
   for (size_t i = 0; i < genetic_opts.population_size; ++i) {
     opts.copy(population[i], input_set[i], opts.len);
+    E = fit(input_set[i]);
+    if (E < best_E || 0 == i) {
+      best_E = E;
+      opts.copy(best, input_set[i], opts.len);
+    }
   }
 
+  while (1) {
 
+  }
+
+  opts.copy(output, best, opts.len);
 
   return DISCO_SUCCESS;
 }
