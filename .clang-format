@@ -31,6 +31,6 @@ SpacesBeforeTrailingComments: 1
 SpacesInCStyleCastParentheses: false
 SpaceAfterCStyleCast: true
 SpacesInParentheses: false
-SpacesInSquareBrackets: true
+SpacesInSquareBrackets: false
 TabWidth: 40 # kept ridiculously wide so that if tabs are inserted they will be obvious
 UseTab: Never
