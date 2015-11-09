@@ -31,11 +31,11 @@ double disco_boltzmann(double E, double new_E, double T, double k) {
 disco_siman_options disco_siman_default_options() {
   disco_siman_options opts = {.tries_per_step = 200,
                               .iters_per_temp = 200,
-                              .step_size = 1,
-                              .k = 1,
-                              .t_init = .008,
-                              .mu_t = 1.003,
-                              .t_min = 2e-6};
+                              .step_size      = 1,
+                              .k              = 1,
+                              .t_init         = .008,
+                              .mu_t           = 1.003,
+                              .t_min          = 2e-6};
   return opts;
 }
 
@@ -54,13 +54,13 @@ disco_return_t disco_siman(disco_state_const input,
   double E, new_E, best_E;
   double T = siman_opts.t_init, T_factor = 1.0 / siman_opts.mu_t;
 
-  x = opts.alloc(opts.len);
-  new_x = opts.alloc(opts.len);
+  x      = opts.alloc(opts.len);
+  new_x  = opts.alloc(opts.len);
   best_x = opts.alloc(opts.len);
   opts.copy(new_x, input, opts.len);
   opts.copy(best_x, input, opts.len);
 
-  E = fit(input);
+  E      = fit(input);
   best_E = E;
 
   while (1) {
@@ -83,14 +83,10 @@ disco_return_t disco_siman(disco_state_const input,
         E = new_E;
       }
     }
-    if (opts.notify && opts.notify(new_x, NULL, new_E)) {
-      break;
-    }
 
+    if (opts.notify && opts.notify(new_x, NULL, new_E)) { break; }
     T *= T_factor;
-    if (T < siman_opts.t_min) {
-      break;
-    }
+    if (T < siman_opts.t_min) { break; }
   }
   opts.copy(output, best_x, opts.len);
   opts.destroy(x);

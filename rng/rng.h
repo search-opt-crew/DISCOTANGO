@@ -39,17 +39,11 @@ typedef struct disco_rng_struct {
 
 disco_rng disco_default_rng();
 
-#define DISCO_CHECK_RNG(rng)      \
-  do {                            \
-    if (!rng.get_32) {            \
-      return DISCO_NO_RNG_32;     \
-    }                             \
-    if (!rng.get_64) {            \
-      return DISCO_NO_RNG_64;     \
-    }                             \
-    if (!rng.get_double) {        \
-      return DISCO_NO_RNG_DOUBLE; \
-    }                             \
+#define DISCO_CHECK_RNG(rng)                             \
+  do {                                                   \
+    if (!rng.get_32) { return DISCO_NO_RNG_32; }         \
+    if (!rng.get_64) { return DISCO_NO_RNG_64; }         \
+    if (!rng.get_double) { return DISCO_NO_RNG_DOUBLE; } \
   } while (0)
 
 #endif /* __DISCO_RNG_H__ */

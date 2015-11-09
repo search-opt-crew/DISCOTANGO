@@ -45,18 +45,12 @@ bool disco_check_args(int, ...);
 #define DISCO_CHECK_ARGS(...) DISCO_CHECK_MACRO(DISCO_NULL_ARG, __VA_ARGS__)
 #define DISCO_CHECK_FUNS(...) DISCO_CHECK_MACRO(DISCO_NO_FUN, __VA_ARGS__)
 
-#define DISCO_CHECK_OPTS(opts)                            \
-  do {                                                    \
-    if (!opts.alloc) {                                    \
-      return DISCO_NO_ALLOC;                              \
-    }                                                     \
-    if (!opts.copy) {                                     \
-      return DISCO_NO_COPY;                               \
-    }                                                     \
-    if (!opts.destroy) {                                  \
-      return DISCO_NO_DESTROY;                            \
-    }                                                     \
-    DISCO_CHECK_RNG(opts.rng);                            \
+#define DISCO_CHECK_OPTS(opts)                      \
+  do {                                              \
+    if (!opts.alloc) { return DISCO_NO_ALLOC; }     \
+    if (!opts.copy) { return DISCO_NO_COPY; }       \
+    if (!opts.destroy) { return DISCO_NO_DESTROY; } \
+    DISCO_CHECK_RNG(opts.rng);                      \
   } while (0)
 
 #endif /* __DISCO_ERROR_H__ */

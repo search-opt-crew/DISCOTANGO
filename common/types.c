@@ -23,10 +23,10 @@
 
 disco_options disco_default_options(size_t len) {
   disco_options opts = {.notify = NULL,
-                        .alloc = malloc,
-                        .copy = memcpy,
+                        .alloc   = malloc,
+                        .copy    = memcpy,
                         .destroy = free,
-                        .rng = disco_default_rng(),
-                        .len = len};
+                        .rng     = disco_default_rng(),
+                        .len     = len};
   return opts;
 }

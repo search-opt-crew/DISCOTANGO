@@ -3,10 +3,11 @@
 Language: Cpp # used for C as well, not just C++
 AlignEscapedNewlinesLeft: true
 AlignTrailingComments: true
+AlignConsecutiveAssignments: true
 AllowAllParametersOfDeclarationOnNextLine: true
-AllowShortBlocksOnASingleLine: false
-AllowShortFunctionsOnASingleLine: None
-AllowShortIfStatementsOnASingleLine: false
+AllowShortBlocksOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: true
 AlwaysBreakAfterDefinitionReturnType: false
 AlwaysBreakBeforeMultilineStrings: false
 BinPackParameters: false

@@ -21,14 +21,14 @@
 
 #define DISCO_ERRSTR(codename, errstr) ("DISCOTANGO: " #codename ": " errstr)
 
-const disco_return_t DISCO_SUCCESS = 0;
-const disco_return_t DISCO_NULL_ARG = -1;
-const disco_return_t DISCO_NO_ALLOC = -2;
-const disco_return_t DISCO_NO_COPY = -3;
-const disco_return_t DISCO_NO_DESTROY = -4;
-const disco_return_t DISCO_NO_FUN = -5;
-const disco_return_t DISCO_NO_RNG_32 = -6;
-const disco_return_t DISCO_NO_RNG_64 = -7;
+const disco_return_t DISCO_SUCCESS       = 0;
+const disco_return_t DISCO_NULL_ARG      = -1;
+const disco_return_t DISCO_NO_ALLOC      = -2;
+const disco_return_t DISCO_NO_COPY       = -3;
+const disco_return_t DISCO_NO_DESTROY    = -4;
+const disco_return_t DISCO_NO_FUN        = -5;
+const disco_return_t DISCO_NO_RNG_32     = -6;
+const disco_return_t DISCO_NO_RNG_64     = -7;
 const disco_return_t DISCO_NO_RNG_DOUBLE = -8;
 
 /* wish there was a more reliable way to report error values that didn't require
@@ -71,9 +71,7 @@ bool disco_check_args(int num, ...) {
   va_list ptrs;
   va_start(ptrs, num);
   for (int i = 0; i < num; ++i) {
-    if (!va_arg(ptrs, void *) ) {
-      return true;
-    }
+    if (!va_arg(ptrs, void *) ) { return true; }
   }
   va_end(ptrs);
   return false;
