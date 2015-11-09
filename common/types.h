@@ -39,7 +39,7 @@ typedef double (*disco_metric)(disco_state_const, disco_state_const);
 /* common options for all functions. all of these have sane defaults, specified
  * at bottom. */
 /* returns true if function should cease execution */
-typedef bool (*disco_notify)(disco_state_const, disco_state_many_const, double);
+typedef bool (*disco_notify)(disco_state_const, double);
 typedef disco_state (*disco_alloc)(size_t);
 /* copy from argument 2 to argument 1 (which /does/ point to already allocated
  * memory). return the newly constructed value. */
