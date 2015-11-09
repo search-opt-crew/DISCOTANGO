@@ -1,4 +1,4 @@
-# Makefile for DISCOTANGO library.
+# Makefile for the DISCOTANGO library.
 # Copyright (c) 2015 Danny McClanahan, Richard Kerr
 
 # DISCOTANGO is free software: you can redistribute it and/or modify

@@ -1,5 +1,5 @@
 /**
- * Type definitions for DISCOTANGO library.
+ * Type definitions for the DISCOTANGO library.
  * Copyright (c) 2015 Danny McClanahan
  *
  * DISCOTANGO is free software: you can redistribute it and/or modify

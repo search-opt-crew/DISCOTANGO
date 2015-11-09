@@ -2,7 +2,7 @@
 #define __DISCO_SIMAN_H__
 
 /**
- * Simulated Annealing for DISCOTANGO library.
+ * Simulated Annealing for the DISCOTANGO library.
  * Copyright (c) 2015 Danny McClanahan
  *
  * DISCOTANGO is free software: you can redistribute it and/or modify

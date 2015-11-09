@@ -1,5 +1,5 @@
 /**
- * Simulated Annealing for DISCOTANGO library.
+ * Simulated Annealing for the DISCOTANGO library.
  * Copyright (c) 2015 Danny McClanahan
  *
  * DISCOTANGO is free software: you can redistribute it and/or modify
@@ -53,7 +53,6 @@ disco_return_t disco_siman(disco_state_const input,
   disco_state x, new_x, best_x;
   double E, new_E, best_E;
   double T = siman_opts.t_init, T_factor = 1.0 / siman_opts.mu_t;
-  size_t n_evals = 0;
 
   x = opts.alloc(opts.len);
   new_x = opts.alloc(opts.len);
@@ -73,9 +72,6 @@ disco_return_t disco_siman(disco_state_const input,
       opts.copy(new_x, x, opts.len);
       step(new_x, opts.rng, siman_opts.step_size);
       new_E = fit(new_x);
-      if (opts.prints && opts.printv) {
-        ++n_evals;
-      }
       /* small optimization here; record best even if it wouldn't have jumped
        * to the state */
       if (new_E < best_E) {
@@ -92,7 +88,7 @@ disco_return_t disco_siman(disco_state_const input,
       }
     }
     if (opts.do_print) {
-      opts.prints("%7d  %12g", n_evals, T);
+      opts.prints("%7d  %12g", i * siman_opts.iters_per_temp, T);
       opts.printv(x);
       opts.prints("  %12g  %12g\n", E, best_E);
     }
