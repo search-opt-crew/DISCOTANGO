@@ -19,9 +19,6 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* increase type safety */
-#define NULL ((void *) 0)
-
 /* The DISCO_PP_NARG macro returns the number of arguments that have been passed
  * to it. */
 

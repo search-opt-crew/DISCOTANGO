@@ -27,6 +27,7 @@ const disco_return_t DISCO_NO_ALLOC;
 const disco_return_t DISCO_NO_COPY;
 const disco_return_t DISCO_NO_DESTROY;
 const disco_return_t DISCO_NO_FUN;
+const disco_return_t DISCO_NO_NOTIFY;
 const disco_return_t DISCO_NO_RNG_32;
 const disco_return_t DISCO_NO_RNG_64;
 const disco_return_t DISCO_NO_RNG_DOUBLE;
@@ -51,6 +52,11 @@ bool disco_check_args(int, ...);
     if (!opts.copy) { return DISCO_NO_COPY; }       \
     if (!opts.destroy) { return DISCO_NO_DESTROY; } \
     DISCO_CHECK_RNG(opts.rng);                      \
+  } while (0)
+
+#define DISCO_NEED_NOTIFY(notify)            \
+  do {                                       \
+    if (!notify) { return DISCO_NO_NOTIFY; } \
   } while (0)
 
 #endif /* __DISCO_ERROR_H__ */
