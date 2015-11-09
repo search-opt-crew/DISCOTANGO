@@ -19,7 +19,7 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "types.h"
+#include "../common/types.h"
 
 const disco_return_t DISCO_SUCCESS;
 const disco_return_t DISCO_NULL_ARG;
@@ -28,6 +28,9 @@ const disco_return_t DISCO_NO_COPY;
 const disco_return_t DISCO_NO_DESTROY;
 const disco_return_t DISCO_NO_PRINT;
 const disco_return_t DISCO_NO_FUN;
+const disco_return_t DISCO_NO_RNG_32;
+const disco_return_t DISCO_NO_RNG_64;
+const disco_return_t DISCO_NO_RNG_DOUBLE;
 
 const char * disco_errstr(disco_return_t);
 
@@ -57,6 +60,7 @@ bool disco_check_args(int, ...);
     if (opts.do_print && !(opts.prints && opts.printv)) { \
       return DISCO_NO_PRINT;                              \
     }                                                     \
+    DISCO_CHECK_RNG(opts.rng);                            \
   } while (0)
 
 #endif /* __DISCO_ERROR_H__ */

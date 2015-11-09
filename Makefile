@@ -39,7 +39,7 @@ MERSENNE_DIR := $(LIB_DIR)/SFMT-src-1.4.1
 UNITY_DIR := $(LIB_DIR)/Unity
 UNITY_DIRS := $(UNITY_DIR)/src $(UNITY_DIR)/extras/fixture/src
 
-OUR_CODE_DIRS := opt common rng
+OUR_CODE_DIRS := opt common rng error
 CODE_DIRS := $(OUR_CODE_DIRS) $(MERSENNE_DIR)
 TEST_DIR := test
 

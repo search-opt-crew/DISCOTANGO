@@ -18,6 +18,7 @@
 
 #include <math.h>
 #include "../common/constants.h"
+#include "../error/error.h"
 #include "siman.h"
 
 double disco_boltzmann(double E, double new_E, double T, double k) {
@@ -52,7 +53,7 @@ disco_return_t disco_siman(disco_state_const input,
   disco_state x, new_x, best_x;
   double E, new_E, best_E;
   double T = siman_opts.t_init, T_factor = 1.0 / siman_opts.mu_t;
-  size_t i, n_evals = 0;
+  size_t n_evals = 0;
 
   x = opts.alloc(opts.len);
   new_x = opts.alloc(opts.len);
@@ -68,7 +69,7 @@ disco_return_t disco_siman(disco_state_const input,
   }
 
   while (1) {
-    for (i = 0; i < siman_opts.iters_per_temp; ++i) {
+    for (size_t i = 0; i < siman_opts.iters_per_temp; ++i) {
       opts.copy(new_x, x, opts.len);
       step(new_x, opts.rng, siman_opts.step_size);
       new_E = fit(new_x);

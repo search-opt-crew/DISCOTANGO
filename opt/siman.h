@@ -19,7 +19,7 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../common/error.h"
+#include "../common/types.h"
 
 typedef struct {
   size_t tries_per_step;

@@ -28,6 +28,9 @@ const disco_return_t DISCO_NO_COPY = -3;
 const disco_return_t DISCO_NO_DESTROY = -4;
 const disco_return_t DISCO_NO_PRINT = -5;
 const disco_return_t DISCO_NO_FUN = -6;
+const disco_return_t DISCO_NO_RNG_32 = -7;
+const disco_return_t DISCO_NO_RNG_64 = -8;
+const disco_return_t DISCO_NO_RNG_DOUBLE = -9;
 
 /* wish there was a more reliable way to report error values that didn't require
  * giving the same error code twice, but C macros don't really give us much
@@ -50,6 +53,18 @@ const char * disco_errstr(disco_return_t err) {
     return DISCO_ERRSTR(DISCO_NO_PRINT, "print functions not given");
   case -6:
     return DISCO_ERRSTR(DISCO_NO_FUN, "required function was not provided");
+  case -7:
+    return DISCO_ERRSTR(
+        DISCO_NO_RNG_32,
+        "required function to return 32 bit int from rng not provided");
+  case -8:
+    return DISCO_ERRSTR(
+        DISCO_NO_RNG_64,
+        "required function to return 64 bit int from rng not provided");
+  case -9:
+    return DISCO_ERRSTR(
+        DISCO_NO_RNG_DOUBLE,
+        "required function to return double from rng not provided");
   default:
     return disco_unrecognized_error;
   }
