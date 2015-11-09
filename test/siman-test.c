@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../opt/siman.h"
+#include "../error/error.h"
 #include "../libs/Unity/src/unity.h"
 #include "../libs/Unity/extras/fixture/src/unity_fixture.h"
 

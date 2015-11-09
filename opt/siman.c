@@ -18,8 +18,8 @@
 
 #include <math.h>
 #include "../common/constants.h"
-#include "../error/error.h"
 #include "siman.h"
+#include "../error/error.h"
 
 double disco_boltzmann(double E, double new_E, double T, double k) {
   double x = -(new_E - E) / (k * T);
