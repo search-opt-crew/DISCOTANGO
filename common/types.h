@@ -28,7 +28,9 @@
  * make a new type of argument, add it here, then add it to your function. */
 typedef int disco_return_t;
 typedef void * disco_state;
+typedef disco_state * disco_state_many;
 typedef const void * disco_state_const;
+typedef const disco_state_const * disco_state_many_const;
 typedef double (*disco_fitness)(disco_state_const);
 typedef disco_state (*disco_step)(disco_state, disco_rng, double);
 typedef disco_state (*disco_mutate)(disco_state, disco_rng);
@@ -36,7 +38,8 @@ typedef double (*disco_metric)(disco_state_const, disco_state_const);
 
 /* common options for all functions. all of these have sane defaults, specified
  * at bottom. */
-typedef void (*disco_notify)(disco_state_const, double);
+/* returns true if function should cease execution */
+typedef bool (*disco_notify)(disco_state_const, disco_state_many_const, double);
 typedef disco_state (*disco_alloc)(size_t);
 /* copy from argument 2 to argument 1 (which /does/ point to already allocated
  * memory). return the newly constructed value. */
