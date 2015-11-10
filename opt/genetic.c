@@ -43,11 +43,13 @@ disco_return_t disco_genetic(disco_state_many_const input_set,
   /* add all current states to some ordered set. choose some selection of top
      performers and cross them over to generate new population. continue until
      user tells you to stop. */
+  /* create "node" structure of disco_state and fitness. create array of such
+     structs. evaluate fitness for all states. sort array by fitness. pull top
+     k, cross them and insert their children in the array, sort again. wash,
+     rinse, repeat. */
   /* while (1) {
-     if (opts.notify(,)) { break; }
+     if (opts.notify(, )) { break; }
      } */
-
-  opts.copy(output, best, opts.len);
 
   return DISCO_SUCCESS;
 }

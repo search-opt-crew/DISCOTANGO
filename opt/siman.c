@@ -84,7 +84,7 @@ disco_return_t disco_siman(disco_state_const input,
       }
     }
 
-    if (opts.notify && opts.notify(new_x, NULL, new_E)) { break; }
+    if (opts.notify && opts.notify(new_x, new_E)) { break; }
     T *= T_factor;
     if (T < siman_opts.t_min) { break; }
   }
