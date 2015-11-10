@@ -33,7 +33,8 @@ disco_return_t disco_genetic(disco_state_many_const input_set,
                              disco_fitness fit,
                              disco_step mutate,
                              disco_genetic_crossover cross,
-                             disco_genetic_options genetic_opts,
+                             disco_genetic_options genetic_opts
+                             __attribute__((unused)),
                              disco_options opts) {
   DISCO_NEED_ARGS(input_set, output);
   DISCO_CHECK_OPTS(opts);
