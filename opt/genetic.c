@@ -18,7 +18,7 @@
 
 #include <stdlib.h>
 #include "genetic.h"
-#include "../error/error.h"
+#include "../common/error.h"
 
 disco_genetic_options disco_genetic_default_options() {
   disco_genetic_options opts = {.num_parents = 2,
