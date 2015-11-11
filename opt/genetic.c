@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include "genetic.h"
 #include "../common/error.h"
+#include "../common/fitness-node.h"
 
 disco_genetic_options disco_genetic_default_options() {
   disco_genetic_options opts = {.num_parents = 2,
@@ -28,10 +29,9 @@ disco_genetic_options disco_genetic_default_options() {
   return opts;
 }
 
-int disco_compare_doubles(const void * a, const void * b) {
+static int disco_compare_doubles(const void * a, const void * b) {
   const double * da = (const double *) a;
   const double * db = (const double *) b;
-
   return (*da > *db) - (*da < *db);
 }
 
@@ -52,14 +52,20 @@ disco_return_t disco_genetic(disco_state_many_const input_set,
      bytes in dynamic struct. cast each element to (double *) to get fitness,
      then get the offset from that and cast to (void *) to get the actual state.
      */
-  disco_state_many population =
-      opts.alloc(opts.len * genetic_opts.population_size);
-  double * fits = opts.alloc(sizeof(double) * opts.len);
-  for (size_t i = 0; i < genetic_opts.population_size; ++i) {
-    opts.copy(population + i, input_set + i, opts.len);
-    fits[i] = fit(input_set + i);
-  }
-  qsort(population, genetic_opts.population_size, opts.len,
+  size_t state_fit_struct_size = sizeof(double) + opts.len;
+  void * population =
+      opts.alloc(state_fit_struct_size * genetic_opts.population_size);
+  void * input_state;
+  char * out_index;
+  void * out_state;
+  double * out_fit;
+  DISCO_FITNESS_NODE_ITERATE(
+      genetic_opts.population_size, state_fit_struct_size, opts.len, out_index,
+      input_state, out_state, out_fit, population, input_set, {
+        opts.copy(out_state, input_state, opts.len);
+        *out_fit = fit(input_state);
+      });
+  qsort(population, genetic_opts.population_size, state_fit_struct_size,
         disco_compare_doubles);
 
   /* add all current states to some ordered set. choose some selection of top

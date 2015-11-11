@@ -5,6 +5,7 @@ AlignEscapedNewlinesLeft: true
 AlignTrailingComments: true
 AlignConsecutiveAssignments: true
 AllowAllParametersOfDeclarationOnNextLine: true
+AllowShortLoopsOnASingleLine: true
 AllowShortBlocksOnASingleLine: true
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: true
