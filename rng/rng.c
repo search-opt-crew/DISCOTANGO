@@ -20,9 +20,13 @@
 #include "rng.h"
 
 disco_rng disco_default_rng() {
+  return disco_default_rng_with_seed(time(NULL));
+}
+
+disco_rng disco_default_rng_with_seed(uint32_t seed) {
   disco_rng rng = {.get_32 = sfmt_genrand_uint32,
                    .get_64     = sfmt_genrand_uint64,
                    .get_double = sfmt_genrand_real1};
-  sfmt_init_gen_rand(&rng.state, (uint32_t) time(NULL));
+  sfmt_init_gen_rand(&rng.state, seed);
   return rng;
 }

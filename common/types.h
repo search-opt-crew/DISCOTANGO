@@ -56,5 +56,6 @@ typedef struct disco_options_struct {
 } disco_options;
 
 disco_options disco_default_options(size_t);
+disco_options disco_default_options_with_seed(size_t, uint32_t);
 
 #endif /* __DISCO_TYPEDEFS_H__ */

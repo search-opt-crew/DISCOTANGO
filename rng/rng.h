@@ -38,6 +38,7 @@ typedef struct disco_rng_struct {
 } disco_rng;
 
 disco_rng disco_default_rng();
+disco_rng disco_default_rng_with_seed();
 
 #define DISCO_CHECK_RNG(rng)                             \
   do {                                                   \

@@ -21,12 +21,23 @@
 #include <stdio.h>
 #include "types.h"
 
-disco_options disco_default_options(size_t len) {
+static disco_options disco_get_default_options(size_t len) {
   disco_options opts = {.notify = NULL,
                         .alloc   = malloc,
                         .copy    = memcpy,
                         .destroy = free,
-                        .rng     = disco_default_rng(),
                         .len     = len};
+  return opts;
+}
+
+disco_options disco_default_options(size_t len) {
+  disco_options opts = disco_get_default_options(len);
+  opts.rng           = disco_default_rng();
+  return opts;
+}
+
+disco_options disco_default_options_with_seed(size_t len, uint32_t seed) {
+  disco_options opts = disco_get_default_options(len);
+  opts.rng           = disco_default_rng_with_seed(seed);
   return opts;
 }
