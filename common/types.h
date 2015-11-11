@@ -28,9 +28,9 @@
  * make a new type of argument, add it here, then add it to your function. */
 typedef int disco_return_t;
 typedef void * disco_state;
-typedef disco_state * disco_state_many;
+typedef void * disco_state_many;
 typedef const void * disco_state_const;
-typedef const disco_state_const * disco_state_many_const;
+typedef const void * disco_state_many_const;
 typedef double (*disco_fitness)(disco_state_const);
 typedef disco_state (*disco_step)(disco_state, disco_rng, double);
 typedef disco_state (*disco_mutate)(disco_state, disco_rng);

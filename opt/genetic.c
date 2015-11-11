@@ -16,16 +16,23 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdlib.h>
 #include "genetic.h"
 #include "../error/error.h"
 
 disco_genetic_options disco_genetic_default_options() {
   disco_genetic_options opts = {.num_parents = 2,
-                                .num_children    = 2,
                                 .population_size = 20,
                                 .mutation_chance = .1,
                                 .mutation_effect = .1};
   return opts;
+}
+
+int disco_compare_doubles(const void * a, const void * b) {
+  const double * da = (const double *) a;
+  const double * db = (const double *) b;
+
+  return (*da > *db) - (*da < *db);
 }
 
 disco_return_t disco_genetic(disco_state_many_const input_set,
@@ -33,13 +40,27 @@ disco_return_t disco_genetic(disco_state_many_const input_set,
                              disco_fitness fit,
                              disco_step mutate,
                              disco_genetic_crossover cross,
-                             disco_genetic_options genetic_opts
-                             __attribute__((unused)),
+                             disco_genetic_options genetic_opts,
                              disco_options opts) {
   DISCO_NEED_ARGS(input_set, output);
   DISCO_CHECK_OPTS(opts);
   DISCO_NEED_FUNS(fit, mutate, cross);
   DISCO_NEED_NOTIFY(opts.notify);
+
+  /* TODO: change this to allocate ((sizeof(double) + opts.len) *
+     genetic_opts.population_size). set fitness to be the first sizeof(double)
+     bytes in dynamic struct. cast each element to (double *) to get fitness,
+     then get the offset from that and cast to (void *) to get the actual state.
+     */
+  disco_state_many population =
+      opts.alloc(opts.len * genetic_opts.population_size);
+  double * fits = opts.alloc(sizeof(double) * opts.len);
+  for (size_t i = 0; i < genetic_opts.population_size; ++i) {
+    opts.copy(population + i, input_set + i, opts.len);
+    fits[i] = fit(input_set + i);
+  }
+  qsort(population, genetic_opts.population_size, opts.len,
+        disco_compare_doubles);
 
   /* add all current states to some ordered set. choose some selection of top
      performers and cross them over to generate new population. continue until
@@ -48,9 +69,6 @@ disco_return_t disco_genetic(disco_state_many_const input_set,
      structs. evaluate fitness for all states. sort array by fitness. pull top
      k, cross them and insert their children in the array, sort again. wash,
      rinse, repeat. */
-  /* while (1) {
-     if (opts.notify(, )) { break; }
-     } */
 
   return DISCO_SUCCESS;
 }

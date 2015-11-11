@@ -23,7 +23,6 @@
 
 typedef struct {
   size_t num_parents;
-  size_t num_children;
   size_t population_size;
   double mutation_chance;
   double mutation_effect;
