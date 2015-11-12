@@ -35,6 +35,8 @@ static int disco_compare_doubles(const void * a, const void * b) {
   return (*da > *db) - (*da < *db);
 }
 
+/* discussion of selection algorithms:
+   http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.11.509&rep=rep1&type=pdf */
 disco_return_t disco_genetic(disco_state_many_const input_set,
                              disco_state output,
                              disco_fitness fit,
@@ -47,11 +49,6 @@ disco_return_t disco_genetic(disco_state_many_const input_set,
   DISCO_NEED_FUNS(fit, mutate, cross);
   DISCO_NEED_NOTIFY(opts.notify);
 
-  /* TODO: change this to allocate ((sizeof(double) + opts.len) *
-     genetic_opts.population_size). set fitness to be the first sizeof(double)
-     bytes in dynamic struct. cast each element to (double *) to get fitness,
-     then get the offset from that and cast to (void *) to get the actual state.
-     */
   size_t state_fit_struct_size = sizeof(double) + opts.len;
   void * population =
       opts.alloc(state_fit_struct_size * genetic_opts.population_size);
@@ -65,16 +62,11 @@ disco_return_t disco_genetic(disco_state_many_const input_set,
         opts.copy(out_state, input_state, opts.len);
         *out_fit = fit(input_state);
       });
-  qsort(population, genetic_opts.population_size, state_fit_struct_size,
-        disco_compare_doubles);
 
-  /* add all current states to some ordered set. choose some selection of top
-     performers and cross them over to generate new population. continue until
-     user tells you to stop. */
-  /* create "node" structure of disco_state and fitness. create array of such
-     structs. evaluate fitness for all states. sort array by fitness. pull top
-     k, cross them and insert their children in the array, sort again. wash,
-     rinse, repeat. */
+  while (1) {
+    qsort(population, genetic_opts.population_size, state_fit_struct_size,
+          disco_compare_doubles);
 
+  }
   return DISCO_SUCCESS;
 }
