@@ -37,6 +37,7 @@ disco_return_t disco_siman(disco_state_const,
                            disco_metric,
                            disco_step,
                            disco_siman_options,
-                           disco_options);
+                           disco_options,
+                           disco_rng *);
 
 #endif /* __DISCO_SIMAN_H__ */

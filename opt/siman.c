@@ -45,9 +45,11 @@ disco_return_t disco_siman(disco_state_const input,
                            disco_metric metric,
                            disco_step step,
                            disco_siman_options siman_opts,
-                           disco_options opts) {
+                           disco_options opts,
+                           disco_rng * rng) {
   DISCO_NEED_ARGS(input, output);
   DISCO_CHECK_OPTS(opts);
+  DISCO_CHECK_RNG_DOUBLE(rng);
   DISCO_NEED_FUNS(fit, metric, step);
 
   disco_state x, new_x, best_x;
@@ -66,7 +68,7 @@ disco_return_t disco_siman(disco_state_const input,
   while (1) {
     for (size_t i = 0; i < siman_opts.iters_per_temp; ++i) {
       opts.copy(new_x, x, opts.len);
-      step(new_x, opts.rng, siman_opts.step_size);
+      step(new_x, rng, siman_opts.step_size);
       new_E = fit(new_x);
       /* small optimization here; record best even if it wouldn't have jumped
        * to the state */
@@ -77,7 +79,7 @@ disco_return_t disco_siman(disco_state_const input,
       if (new_E < E) {
         opts.copy(x, new_x, opts.len);
         E = new_E;
-      } else if (opts.rng.get_double(&opts.rng.state) <
+      } else if (rng->get_double(rng->state) <
                  disco_boltzmann(E, new_E, T, siman_opts.k)) {
         opts.copy(x, new_x, opts.len);
         E = new_E;

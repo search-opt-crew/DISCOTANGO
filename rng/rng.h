@@ -20,13 +20,13 @@
  */
 
 #include <stddef.h>
-#include "../libs/SFMT-src-1.4.1/SFMT.h"
+#include <stdint.h>
 
-typedef sfmt_t disco_rng_state;
+typedef void * disco_rng_state;
 
-typedef uint32_t (*disco_rng_get_uint32)(disco_rng_state *);
-typedef uint64_t (*disco_rng_get_uint64)(disco_rng_state *);
-typedef double (*disco_rng_get_double)(disco_rng_state *);
+typedef uint32_t (*disco_rng_get_uint32)(disco_rng_state);
+typedef uint64_t (*disco_rng_get_uint64)(disco_rng_state);
+typedef double (*disco_rng_get_double)(disco_rng_state);
 
 /* assumes it will be run on itself, so disco_get_random functions assume the
  * pointer passed to them is valid and DO NOT CHECK FOR NULL. */
@@ -37,14 +37,31 @@ typedef struct disco_rng_struct {
   disco_rng_state state;
 } disco_rng;
 
-disco_rng disco_default_rng();
-disco_rng disco_default_rng_with_seed();
+disco_rng * disco_default_rng();
+disco_rng * disco_default_rng_with_seed(uint32_t);
+void disco_free_rng(disco_rng *);
 
-#define DISCO_CHECK_RNG(rng)                             \
-  do {                                                   \
-    if (!rng.get_32) { return DISCO_NO_RNG_32; }         \
-    if (!rng.get_64) { return DISCO_NO_RNG_64; }         \
-    if (!rng.get_double) { return DISCO_NO_RNG_DOUBLE; } \
+#define DISCO_CHECK_RNG_EXISTS(rng)    \
+  do {                                 \
+    if (!rng) { return DISCO_NO_RNG; } \
+  } while (0)
+
+#define DISCO_CHECK_RNG_32(rng)                   \
+  do {                                            \
+    DISCO_CHECK_RNG_EXISTS(rng);                  \
+    if (!rng->get_32) { return DISCO_NO_RNG_32; } \
+  } while (0)
+
+#define DISCO_CHECK_RNG_64(rng)                   \
+  do {                                            \
+    DISCO_CHECK_RNG_EXISTS(rng);                  \
+    if (!rng->get_64) { return DISCO_NO_RNG_64; } \
+  } while (0)
+
+#define DISCO_CHECK_RNG_DOUBLE(rng)                       \
+  do {                                                    \
+    DISCO_CHECK_RNG_EXISTS(rng);                          \
+    if (!rng->get_double) { return DISCO_NO_RNG_DOUBLE; } \
   } while (0)
 
 #endif /* __DISCO_RNG_H__ */

@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../opt/siman.h"
-#include "../error/error.h"
+#include "../common/error.h"
 #include "../libs/Unity/src/unity.h"
 #include "../libs/Unity/extras/fixture/src/unity_fixture.h"
 
@@ -29,9 +29,9 @@ double E1(disco_state_const xp) {
   return exp(-pow((x - 1), 2)) * sin(8 * x);
 }
 
-disco_state S1(disco_state xp, disco_rng r, double step_size) {
+disco_state S1(disco_state xp, disco_rng * r, double step_size) {
   double * x = (double *) xp;
-  *x = r.get_double(&r.state) * 2 * step_size - step_size + *x;
+  *x = r->get_double(r->state) * 2 * step_size - step_size + *x;
   return (disco_state) x;
 }
 
@@ -53,17 +53,20 @@ TEST_TEAR_DOWN(siman) {}
 
 TEST(siman, EqualsGSL) {
   disco_siman_options sopts = disco_siman_default_options();
+  disco_rng * rng           = disco_default_rng();
   size_t data_size          = sizeof(double);
   disco_state test_in = malloc(data_size), test_out = malloc(data_size);
   *((double *) test_in) = 0;
   disco_options opts = disco_default_options(data_size);
-  disco_return_t ret = disco_siman(test_in, test_out, E1, M1, S1, sopts, opts);
+  disco_return_t ret =
+      disco_siman(test_in, test_out, E1, M1, S1, sopts, opts, rng);
   TEST_ASSERT_EQUAL_MESSAGE(0, ret, disco_errstr(ret));
   TEST_ASSERT_FLOAT_WITHIN_MESSAGE(TEST_FLOAT_TOLERANCE, 1.363131,
                                    *((double *) test_out),
                                    "should be 1.363131");
   free(test_in);
   free(test_out);
+  disco_free_rng(rng);
 }
 
 TEST_GROUP_RUNNER(siman) {

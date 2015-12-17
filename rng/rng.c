@@ -17,16 +17,36 @@
  */
 
 #include <time.h>
+#include <stdlib.h>
 #include "rng.h"
+#include "../libs/SFMT-src-1.4.1/SFMT.h"
 
-disco_rng disco_default_rng() {
+disco_rng * disco_default_rng() {
   return disco_default_rng_with_seed(time(NULL));
 }
 
-disco_rng disco_default_rng_with_seed(uint32_t seed) {
-  disco_rng rng = {.get_32 = sfmt_genrand_uint32,
-                   .get_64     = sfmt_genrand_uint64,
-                   .get_double = sfmt_genrand_real1};
-  sfmt_init_gen_rand(&rng.state, seed);
+static inline uint32_t disco_get_32_sfmt(disco_rng_state state) {
+  return sfmt_genrand_uint32((sfmt_t *) state);
+}
+
+static inline uint64_t disco_get_64_sfmt(disco_rng_state state) {
+  return sfmt_genrand_uint64((sfmt_t *) state);
+}
+
+static inline double disco_get_double_sfmt(disco_rng_state state) {
+  return sfmt_genrand_real1((sfmt_t *) state);
+}
+
+disco_rng * disco_default_rng_with_seed(uint32_t seed) {
+  disco_rng * rng = malloc(sizeof(disco_rng));
+  rng->get_32     = disco_get_32_sfmt;
+  rng->get_64     = disco_get_64_sfmt;
+  rng->get_double = disco_get_double_sfmt;
+  rng->state = malloc(sizeof(sfmt_t));
+  sfmt_init_gen_rand((sfmt_t *) rng->state, seed);
   return rng;
+}
+
+void disco_free_rng(disco_rng * rng) {
+  free(rng);
 }

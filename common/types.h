@@ -32,8 +32,8 @@ typedef void * disco_state_many;
 typedef const void * disco_state_const;
 typedef const void * disco_state_many_const;
 typedef double (*disco_fitness)(disco_state_const);
-typedef disco_state (*disco_step)(disco_state, disco_rng, double);
-typedef disco_state (*disco_mutate)(disco_state, disco_rng);
+typedef disco_state (*disco_step)(disco_state, disco_rng *, double);
+typedef disco_state (*disco_mutate)(disco_state, disco_rng *);
 typedef double (*disco_metric)(disco_state_const, disco_state_const);
 
 /* common options for all functions. all of these have sane defaults, specified
@@ -51,11 +51,9 @@ typedef struct disco_options_struct {
   disco_alloc alloc;
   disco_copy copy;
   disco_destroy destroy;
-  disco_rng rng;
   size_t len; /* size of disco_state used in problem */
 } disco_options;
 
 disco_options disco_default_options(size_t);
-disco_options disco_default_options_with_seed(size_t, uint32_t);
 
 #endif /* __DISCO_TYPEDEFS_H__ */
