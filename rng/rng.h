@@ -19,7 +19,6 @@
  * along with DISCOTANGO.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stddef.h>
 #include <stdint.h>
 
 typedef void * disco_rng_state;
