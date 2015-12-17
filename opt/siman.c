@@ -70,8 +70,6 @@ disco_return_t disco_siman(disco_state_const input,
       opts.copy(new_x, x, opts.len);
       step(new_x, rng, siman_opts.step_size);
       new_E = fit(new_x);
-      /* small optimization here; record best even if it wouldn't have jumped
-       * to the state */
       if (new_E < best_E) {
         opts.copy(best_x, new_x, opts.len);
         best_E = new_E;
