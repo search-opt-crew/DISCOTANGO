@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <time.h>
 #include "../common/fitness-node.h"
+#include "../libs/Unity/src/unity.h"
+#include "../libs/Unity/extras/fixture/src/unity_fixture.h"
 
 /* TODO: fix this into complete sorting test */
 
@@ -17,13 +20,17 @@ double fit(void * inp) {
   return (double) *((int *) inp);
 }
 
-int main() {
+TEST_GROUP(fitnessnode);
+
+TEST_SETUP(fitnessnode) {}
+
+TEST_TEAR_DOWN(fitnessnode) {}
+
+TEST(fitnessnode, loopworks) {
   srand(time(NULL));
   const size_t num = 15;
   int arr[num];
-  for (size_t i = 0; i < num; ++i) {
-    arr[i] = rand();
-  }
+  for (size_t i = 0; i < num; ++i) { arr[i] = rand(); }
   size_t state_fit_struct_size = sizeof(double) + sizeof(int);
   void * population            = malloc(state_fit_struct_size * num);
   void * input_state;
@@ -36,8 +43,20 @@ int main() {
                                *cur_fit = fit(input_state);
                              });
   qsort(population, num, state_fit_struct_size, disco_compare_doubles);
+  bool first_el = true;
+  int prev_el;
   DISCO_FITNESS_NODE_ITERATE(num, state_fit_struct_size, sizeof(int), cur_index,
-                             input_state, cur_state, cur_fit, population, arr,
-                             { printf("%d\n", *((int *) cur_state)); });
+                             input_state, cur_state, cur_fit, population, arr, {
+                               if (!first_el) {
+                                 TEST_ASSERT_TRUE(*((int *) cur_state) >=
+                                                  prev_el);
+                               }
+                               first_el = false;
+                               prev_el = *((int *) cur_state);
+                             });
   free(population);
+}
+
+TEST_GROUP_RUNNER(fitnessnode) {
+  RUN_TEST_CASE(fitnessnode, loopworks);
 }

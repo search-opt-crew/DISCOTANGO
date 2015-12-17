@@ -66,7 +66,6 @@ disco_return_t disco_genetic(disco_state_many_const input_set,
   while (1) {
     qsort(population, genetic_opts.population_size, state_fit_struct_size,
           disco_compare_doubles);
-
   }
   return DISCO_SUCCESS;
 }

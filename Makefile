@@ -92,7 +92,7 @@ $(UNITY_DIRS):
 	git submodule foreach git pull origin master
 
 test: all $(TEST_BIN)
-	$(TEST_BIN)
+	$(TEST_BIN) -v
 
 clean:
 	rm -f $(OUT) $(BIN) $(TEST_BIN)

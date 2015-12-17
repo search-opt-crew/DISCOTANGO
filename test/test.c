@@ -20,6 +20,7 @@
 
 static void RunAllTests() {
   RUN_TEST_GROUP(siman);
+  RUN_TEST_GROUP(fitnessnode);
 }
 
 int main(int argc, const char ** argv) {
