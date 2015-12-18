@@ -91,8 +91,13 @@ $(UNITY_DIRS):
 	git submodule update --init --recursive
 	git submodule foreach git pull origin master
 
+VERBOSE ?= 0
 test: all $(TEST_BIN)
+ifeq ($(VERBOSE),0)
+	$(TEST_BIN)
+else
 	$(TEST_BIN) -v
+endif
 
 clean:
 	rm -f $(OUT) $(BIN) $(TEST_BIN)

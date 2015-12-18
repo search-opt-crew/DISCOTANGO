@@ -35,10 +35,6 @@ disco_state S1(disco_state xp, disco_rng * r, double step_size) {
   return (disco_state) x;
 }
 
-void P1(disco_state xp) {
-  printf("%12g", *((double *) xp));
-}
-
 double M1(disco_state_const xp, disco_state_const yp) {
   return fabs(*((double *) xp) - *((double *) yp));
 }
