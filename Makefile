@@ -16,6 +16,11 @@
 
 .PHONY: all clean test format
 
+define \n
+
+
+endef
+
 # required for mersenne twister (sfmt) compilation
 DEFINES := -DSFMT_MEXP=19937
 ALL_CC_OPTS := -std=c99 -Wall -Wextra -Werror $(DEFINES)
@@ -39,7 +44,7 @@ MERSENNE_DIR := $(LIB_DIR)/SFMT-src-1.4.1
 UNITY_DIR := $(LIB_DIR)/Unity
 UNITY_DIRS := $(UNITY_DIR)/src $(UNITY_DIR)/extras/fixture/src
 
-OUR_CODE_DIRS := opt common rng error
+OUR_CODE_DIRS := opt common rng
 CODE_DIRS := $(OUR_CODE_DIRS) $(MERSENNE_DIR)
 TEST_DIR := test
 
@@ -51,10 +56,6 @@ OUT := $(addprefix $(BUILD_DIR)/,$(notdir $(IN:%.c=%.o)))
 # the $(OUT) transformation relies on every .c filename being unique within the
 # codebase. this allows us to output all the .o files into build/{debug,release}
 # in a single flat folder, and to use vpath
-define \n
-
-
-endef
 wsort = $(words $(sort $(notdir $1)))
 ifneq ($(call wsort,$(DEPS)),$(words $(DEPS)))
 $(error DEPS is non-unique, ensure all .h files are unique:${\n}$(DEPS))
